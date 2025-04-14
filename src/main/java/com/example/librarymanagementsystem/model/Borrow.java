@@ -2,8 +2,8 @@ package com.example.librarymanagementsystem.model;
 
 import java.util.Date;
 
-public class Borrowing {
-        private int borrowingId;
+public class Borrow {
+        private int borrowId;
         private int bookId;
         private int userId;
         private Date borrowDate;
@@ -11,8 +11,8 @@ public class Borrowing {
         private Date returnDate;
         private String status;
 
-    public Borrowing(int borrowingId, int bookId, int userId, Date borrowDate, Date dueDate, Date returnDate, String status) {
-        this.borrowingId = borrowingId;
+    public Borrow(int borrowingId, int bookId, int userId, Date borrowDate, Date dueDate, Date returnDate, String status) {
+        this.borrowId = borrowingId;
         this.bookId = bookId;
         this.userId = userId;
         this.borrowDate = borrowDate;
@@ -22,11 +22,11 @@ public class Borrowing {
     }
 
     public int getBorrowingId() {
-        return borrowingId;
+        return borrowId;
     }
 
     public void setBorrowingId(int borrowingId) {
-        this.borrowingId = borrowingId;
+        this.borrowId = borrowingId;
     }
 
     public int getBookId() {
@@ -75,5 +75,10 @@ public class Borrowing {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+    @Override
+    public String toString() {
+        return "Borrowing [borrowingId=" + borrowId + ", bookId=" + bookId +
+                ", userId=" + userId + ", status=" + status + "]";
     }
 }
