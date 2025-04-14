@@ -6,8 +6,8 @@ CREATE TABLE IF NOT EXISTS books (
                     author VARCHAR(255) NOT NULL,
                     publication_year DATE NOT NULL,
                     category VARCHAR(100),
-                    stock INT DEFAULT 1,
-                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                    stock INT DEFAULT 1
+
 );
 
 CREATE TABLE IF NOT EXISTS users (
@@ -28,7 +28,6 @@ CREATE TABLE IF NOT EXISTS borrow (
                     return_date DATE,
                     fine_amount DECIMAL(10, 2) DEFAULT 0.0,
                     status ENUM('borrowed', 'returned', 'overdue', 'reserved') DEFAULT 'borrowed',
-                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     FOREIGN KEY (book_id) REFERENCES books(book_id),
                     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
