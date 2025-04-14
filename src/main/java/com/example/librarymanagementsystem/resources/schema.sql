@@ -31,4 +31,14 @@ CREATE TABLE IF NOT EXISTS borrow (
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     FOREIGN KEY (book_id) REFERENCES books(book_id),
                     FOREIGN KEY (user_id) REFERENCES users(user_id)
-)
+);
+CREATE TABLE IF NOT EXISTS reservations (
+                    reservation_id INT AUTO_INCREMENT PRIMARY KEY,
+                    book_id INT NOT NULL,
+                    user_id INT NOT NULL,
+                    reservation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    status ENUM('active', 'expired', 'cancelled') DEFAULT 'active',
+                    reserved_until DATE NOT NULL,
+                    FOREIGN KEY (book_id) REFERENCES books(book_id),
+                    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
