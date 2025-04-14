@@ -1,11 +1,13 @@
 CREATE SCHEMA IF NOT EXISTS library_db;
 USE library_db;
 CREATE TABLE IF NOT EXISTS books (
-                       book_id INT AUTO_INCREMENT PRIMARY KEY,
-                       title VARCHAR(255) NOT NULL,
-                       author VARCHAR(255) NOT NULL,
-                       publication_year DATE NOT NULL ,
-                       category VARCHAR(100)
+                    book_id INT AUTO_INCREMENT PRIMARY KEY,
+                    title VARCHAR(255) NOT NULL,
+                    author VARCHAR(255) NOT NULL,
+                    publication_year DATE NOT NULL,
+                    category VARCHAR(100),
+                    stock INT DEFAULT 1,  -- Track the number of copies available
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS users (

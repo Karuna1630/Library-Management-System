@@ -6,15 +6,19 @@ public class Book {
     private String author;
     private int publicationYear;
     private String category;
+    private int stock;
 
-    public Book(int bookId, String title, String author, String publisher, int publicationYear, String category) {
+
+    public Book(int bookId, String title, String author, int publicationYear, String category, int stock) {
         this.bookId = bookId;
         this.title = title;
         this.author = author;
         this.publicationYear = publicationYear;
         this.category = category;
+        this.stock = stock;
     }
 
+    // Getters and Setters for each field
     public int getBookId() {
         return bookId;
     }
@@ -54,12 +58,19 @@ public class Book {
     public void setCategory(String category) {
         this.category = category;
     }
-    //displaying the string representation of the Book object
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    // Override the toString method to display all fields, including stock
     @Override
     public String toString() {
         return "Book [bookId=" + bookId + ", title=" + title + ", author=" + author +
-                ", publicationYear=" + publicationYear + ", category=" + category + "]";
+                ", publicationYear=" + publicationYear + ", category=" + category + ", stock=" + stock + "]";
     }
-
 }
-
