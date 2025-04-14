@@ -1,4 +1,4 @@
 package com.example.librarymanagementsystem.dao;
 
-public class BorrowingDAO {
+public class BorrowDAO {
 }

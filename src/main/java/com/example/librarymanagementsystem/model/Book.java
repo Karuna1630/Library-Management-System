@@ -54,9 +54,12 @@ public class Book {
     public void setCategory(String category) {
         this.category = category;
     }
+    //displaying the string representation of the Book object
     @Override
     public String toString() {
-        return "Book [bookId=" + bookId + ", title=" + title + ", author=" + author + "]";
+        return "Book [bookId=" + bookId + ", title=" + title + ", author=" + author +
+                ", publicationYear=" + publicationYear + ", category=" + category + "]";
     }
+
 }
 
