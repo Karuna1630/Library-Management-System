@@ -1,15 +1,18 @@
 CREATE SCHEMA IF NOT EXISTS library_db;
 USE library_db;
+CREATE TABLE IF NOT EXISTS categories (
+                    category_id INT AUTO_INCREMENT PRIMARY KEY,
+                    name VARCHAR(100) NOT NULL UNIQUE
+);
 CREATE TABLE IF NOT EXISTS books (
                     book_id INT AUTO_INCREMENT PRIMARY KEY,
                     title VARCHAR(255) NOT NULL,
                     author VARCHAR(255) NOT NULL,
-                    publication_year DATE NOT NULL,
-                    category VARCHAR(100),
-                    stock INT DEFAULT 1
-
+                    publication_year YEAR NOT NULL,
+                    category_id VARCHAR(100),
+                    stock INT DEFAULT 1,
+                    FOREIGN KEY (category_id) REFERENCES categories(category_id)
 );
-
 CREATE TABLE IF NOT EXISTS users (
                     user_id INT AUTO_INCREMENT PRIMARY KEY,
                     full_name VARCHAR(100) NOT NULL,
@@ -40,8 +43,4 @@ CREATE TABLE IF NOT EXISTS reservations (
                     reserved_until DATE NOT NULL,
                     FOREIGN KEY (book_id) REFERENCES books(book_id),
                     FOREIGN KEY (user_id) REFERENCES users(user_id)
-);
-CREATE TABLE IF NOT EXISTS categories (
-                    category_id INT AUTO_INCREMENT PRIMARY KEY,
-                    name VARCHAR(100) NOT NULL UNIQUE
 );
