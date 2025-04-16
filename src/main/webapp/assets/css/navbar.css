@@ -1,0 +1,83 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1e3d59;
+    padding: 15px 30px;
+    color: #fff;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-right: 15px;
+}
+
+.search-bar {
+    padding: 8px;
+    border-radius: 15px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    width: 350px; /* Adjust size as needed */
+    vertical-align: middle;
+}
+
+.navbar-center .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-center .nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.navbar-center .nav-links li a:hover {
+    color: #ffcc00;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.auth-btn {
+    color: white;
+    text-decoration: none;
+    padding: 6px 12px;
+    border: 1px solid white;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.auth-btn:hover {
+    background-color: #ffcc00;
+    color: #1e3d59;
+}
+
+.cart-btn {
+    font-size: 20px;
+    color: white;
+    text-decoration: none;
+    padding: 5px;
+}
+
+.cart-btn:hover {
+    color: #ffcc00;
+}
