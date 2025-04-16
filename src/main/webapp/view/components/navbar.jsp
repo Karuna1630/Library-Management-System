@@ -52,7 +52,7 @@
         <a href="<%= request.getContextPath() %>/view/auth/logout.jsp" class="auth-btn">Logout</a>
         <% } %>
 
-        <a href="<%= request.getContextPath() %>/view/auth/reserve.jsp" class="cart-btn"><i class="fa-solid fa-store"></i></a>
+        <a href="<%= request.getContextPath() %>/view/auth/reservation.jsp" class="cart-btn"><i class="fa-solid fa-store"></i></a>
     </div>
 </nav>
 </body>
