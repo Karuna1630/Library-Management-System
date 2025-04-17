@@ -11,7 +11,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Navbar</title>
-    <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/assets/css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/view/css/navbar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
@@ -52,9 +52,8 @@
         <a href="<%= request.getContextPath() %>/view/auth/logout.jsp" class="auth-btn">Logout</a>
         <% } %>
 
-        <a href="<%= request.getContextPath() %>/view/auth/reservation.jsp" class="cart-btn"><i class="fa-solid fa-store"></i></a>
+        <a href="<%= request.getContextPath() %>/view/auth/reserve.jsp" class="cart-btn"><i class="fa-solid fa-store"></i></a>
     </div>
 </nav>
 </body>
 </html>
-
