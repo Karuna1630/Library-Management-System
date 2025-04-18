@@ -9,50 +9,66 @@
 <%@ page import="java.util.*" %>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Navbar</title>
-    <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/view/css/navbar.css">
+    <title>UniShelf - University Library Management System</title>
+    <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/assets/css/navbar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 <nav class="navbar">
-    <div class="navbar-left">
-        <div class="logo">UniSelf</div>
-        <!-- Search bar wrapped in a form -->
-        <form action="<%= request.getContextPath() %>/view/pages/books.jsp" method="get">
-            <input type="text" class="search-bar" name="query" placeholder="Search books">
-        </form>
-    </div>
+    <div class="navbar-container">
+        <div class="navbar-brand">
+            <i class="fas fa-book-open"></i>
+            <span>UniShelf</span>
+        </div>
 
-    <div class="navbar-center">
-        <ul class="nav-links">
-            <li><a href="<%= request.getContextPath() %>/index.jsp">Home</a></li>
-            <li><a href="<%= request.getContextPath() %>/view/pages/books.jsp">Books</a></li>
-            <li><a href="<%= request.getContextPath() %>/view/pages/aboutus.jsp">About Us</a></li>
+        <div class="navbar-search">
+            <form action="<%= request.getContextPath() %>/view/pages/books.jsp" method="get">
+                <div class="search-container">
+                    <input type="text" name="query" placeholder="Search books..." class="search-input">
+                    <button type="submit" class="search-button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
 
+        <div class="navbar-menu">
+            <ul class="nav-links">
+                <li><a href="<%= request.getContextPath() %>/index.jsp" class="nav-link">Home</a></li>
+                <li><a href="<%= request.getContextPath() %>/view/pages/books.jsp" class="nav-link">Books</a></li>
+                <li><a href="<%= request.getContextPath() %>/view/pages/aboutus.jsp" class="nav-link">About Us</a></li>
+
+                <%
+                    String role = (String) session.getAttribute("role");
+                    if ("member".equals(role)) {
+                %>
+                <li><a href="<%= request.getContextPath() %>/view/pages/profile.jsp" class="nav-link">Profile</a></li>
+                <% } else if ("admin".equals(role)) { %>
+                <li><a href="<%= request.getContextPath() %>/view/dashboard/admin-dashboard.jsp" class="nav-link">Dashboard</a></li>
+                <% } %>
+            </ul>
+        </div>
+
+        <div class="navbar-actions">
             <%
-                String role = (String) session.getAttribute("role");
-                if ("member".equals(role)) {
+                String username = (String) session.getAttribute("username");
+                if (username == null) {
             %>
-            <li><a href="<%= request.getContextPath() %>/view/pages/profile.jsp">Profile</a></li>
-            <% } else if ("admin".equals(role)) { %>
-            <li><a href="<%= request.getContextPath() %>/view/dashboard/admin-dashboard.jsp">Admin</a></li>
+            <a href="<%= request.getContextPath() %>/view/auth/login.jsp" class="btn btn-outline">Login</a>
+            <a href="<%= request.getContextPath() %>/view/auth/register.jsp" class="btn btn-primary">Sign Up</a>
+            <% } else { %>
+            <a href="<%= request.getContextPath() %>/view/auth/logout.jsp" class="btn btn-outline">Logout</a>
             <% } %>
-        </ul>
-    </div>
 
-    <div class="navbar-right">
-        <%
-            String username = (String) session.getAttribute("username");
-            if (username == null) {
-        %>
-        <a href="<%= request.getContextPath() %>/view/auth/login.jsp" class="auth-btn">Login</a>
-        <a href="<%= request.getContextPath() %>/view/auth/register.jsp" class="auth-btn">Sign Up</a>
-        <% } else { %>
-        <a href="<%= request.getContextPath() %>/view/auth/logout.jsp" class="auth-btn">Logout</a>
-        <% } %>
+            <a href="<%= request.getContextPath() %>/view/auth/reservation.jsp" class="cart-icon">
+                <i class="fas fa-store"></i>
+            </a>
+        </div>
 
-        <a href="<%= request.getContextPath() %>/view/auth/reserve.jsp" class="cart-btn"><i class="fa-solid fa-store"></i></a>
+        <button class="navbar-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
     </div>
 </nav>
 </body>

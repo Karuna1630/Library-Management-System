@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS books (
                     author VARCHAR(255) NOT NULL,
                     publication_year YEAR NOT NULL,
                     category_id VARCHAR(100),
-                    stock INT DEFAULT 1,
+                    status INT DEFAULT 1,
                     FOREIGN KEY (category_id) REFERENCES categories(category_id)
 );
 CREATE TABLE IF NOT EXISTS users (
