@@ -23,12 +23,16 @@
             </div>
         </div>
 
-        <form class="registerForm" id="registerForm" action="/register" method="POST" onsubmit="return validateForm('registerForm')">
+        <form class="registerForm" id="registerForm"
+              action="<%= request.getContextPath()%>/RegisterServlet"
+              method="POST"
+              enctype="multipart/form-data"
+              onsubmit="return validateForm('registerForm')">
             <h2>Create an Account</h2>
             <p>Your journey to smarter reading starts here.</p>
 
             <div class="form-group">
-                <label for="full_name">Full Name</label>
+                <label for="full_name">UserName</label>
                 <div class="input-container">
                     <i class="fas fa-user input-icon"></i>
                     <input type="text" id="full_name" name="full_name" placeholder="Enter your full name" required>
@@ -53,6 +57,27 @@
             </div>
 
             <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <div class="password-input-container">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password" required>
+                    <i id="toggleConfirmPassword" class="fas fa-eye toggle-icon" onclick="togglePassword('confirmPassword', 'toggleConfirmPassword')"></i>
+                </div>
+            </div>
+
+            <!--  Role Selection Dropdown -->
+            <div class="form-group">
+                <label for="role">Role:</label>
+                <div class="input-container">
+                    <i class="fas fa-user-tag input-icon"></i>
+                    <select id="role" name="role" class="form-select" required>
+                        <option value="user">User</option>
+                        <option value="admin">Administrator</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
                 <label for="image">Profile Picture</label>
                 <div class="file-input-container">
                     <label for="image" class="file-input-label">
@@ -71,10 +96,10 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn">Create Account</button>
+            <button type="submit" class="btn">Register</button>
 
             <div class="bottom-link">
-                Already have an account? <a href="./login.jsp">Sign In</a>
+                Already have an account? <a href="LoginServlet">Sign In</a>
             </div>
         </form>
 
