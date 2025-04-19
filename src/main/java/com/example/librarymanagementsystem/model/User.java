@@ -1,44 +1,63 @@
 package com.example.librarymanagementsystem.model;
 
 
+import javax.management.relation.Role;
+import java.util.Arrays;
+import java.util.Date;
 
 public class User {
+    public enum Role{admin, user}
     private int id;
     private String fullName;
     private String email;
     private String password;
-    private int role = 1;
+    private String confirmPassword;
+    private Role role;
+    private byte[] image;
+    private Date created_at;
 
     public User() {
     }
 
-    public User(String fullName, String email, String password) {
-        fullName = fullName;
-        email = email;
-        password = password;
+    public User(String fullName, String email, String password, String confirmPassword, Role role, Date created_at) {
+        this.fullName = fullName;
+        this.email = email;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
+        this.role = role;
+        this.created_at = created_at;
     }
 
-public User(int id, String fullName, String email, String password) {
-    this.id = id;
-    fullName = fullName;
-    email = email;
-    password = password;
-}
+    public User(int id, String fullName, String email, String password, String confirmPassword, Role role, Date created_at) {
+        this.id = id;
+        this.fullName = fullName;
+        this.email = email;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
+        this.role = role;
+        this.created_at = created_at;
+    }
 
-public User(String fullName, String email, String password, int role) {
-    fullName = fullName;
-    email = email;
-    password = password;
-    this.role = role;
-}
+    public User(String fullName, String email, String password, String confirmPassword, Role role, byte[] image, Date created_at) {
+        this.fullName = fullName;
+        this.email = email;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
+        this.role = role;
+        this.image = image;
+        this.created_at = created_at;
+    }
 
-public User(int id, String fullName, String email, String password, int role) {
-    this.id = id;
-    fullName = fullName;
-    email = email;
-    password = password;
-    this.role = role;
-}
+    public User(int id, String fullName, String email, String password, String confirmPassword, Role role, byte[] image, Date created_at) {
+        this.id = id;
+        this.fullName = fullName;
+        this.email = email;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
+        this.role = role;
+        this.image = image;
+        this.created_at = created_at;
+    }
 
     public int getId() {
         return id;
@@ -53,7 +72,7 @@ public User(int id, String fullName, String email, String password, int role) {
     }
 
     public void setFullName(String fullName) {
-        fullName = fullName;
+        this.fullName = fullName;
     }
 
     public String getEmail() {
@@ -61,7 +80,7 @@ public User(int id, String fullName, String email, String password, int role) {
     }
 
     public void setEmail(String email) {
-        email = email;
+        this.email = email;
     }
 
     public String getPassword() {
@@ -69,42 +88,39 @@ public User(int id, String fullName, String email, String password, int role) {
     }
 
     public void setPassword(String password) {
-        password = password;
+        this.password = password;
     }
 
-    public int getRole() {
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(int role) {
+    public void setRole(Role role) {
         this.role = role;
     }
-    // Helper methods for role checks
-    public boolean isSuperAdmin() {
-        return role == 0;
+
+    public byte[] getImage() {
+        return image;
     }
 
-    public boolean isRegularUser() {
-        return role == 1;
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
-    public boolean isAdmin() {
-        return role == 2;
+    public Date getCreated_at() {
+        return created_at;
     }
 
-    // Helper method to check if user has admin-level permissions
-    public boolean hasAdminPermissions() {
-        return role == 0 || role == 2; // Super admin or regular admin
-    }
-
-    // Helper method to check if user can upload images
-    public boolean canUploadImages() {
-        return role == 1 || role == 2; // Regular user or regular admin
-    }
-    //displaying the string representation of the User object
-    @Override
-    public String toString() {
-        return "User [id=" + id + ", fullName=" + fullName + ", email=" + email + ", role=" + role + "]";
+    public void setCreated_at(Date created_at) {
+        this.created_at = created_at;
     }
 }
 
