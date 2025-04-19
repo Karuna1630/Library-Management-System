@@ -41,7 +41,7 @@
 
                 <%
                     String role = (String) session.getAttribute("role");
-                    if ("member".equals(role)) {
+                    if ("user".equals(role)) {
                 %>
                 <li><a href="<%= request.getContextPath() %>/view/pages/profile.jsp" class="nav-link">Profile</a></li>
                 <% } else if ("admin".equals(role)) { %>
@@ -55,13 +55,13 @@
                 String username = (String) session.getAttribute("username");
                 if (username == null) {
             %>
-            <a href="<%= request.getContextPath() %>/view/auth/login.jsp" class="btn btn-outline">Login</a>
-            <a href="<%= request.getContextPath() %>/view/auth/register.jsp" class="btn btn-primary">Sign Up</a>
+            <a href="<%= request.getContextPath() %>/LoginServlet" class="btn btn-outline">Login</a>
+            <a href="<%= request.getContextPath() %>/RegisterServlet" class="btn btn-primary">Sign Up</a>
             <% } else { %>
             <a href="<%= request.getContextPath() %>/view/auth/logout.jsp" class="btn btn-outline">Logout</a>
             <% } %>
 
-            <a href="<%= request.getContextPath() %>/view/auth/reservation.jsp" class="cart-icon">
+            <a href="<%= request.getContextPath() %>/view/auth/reserve.jsp" class="cart-icon">
                 <i class="fas fa-store"></i>
             </a>
         </div>
