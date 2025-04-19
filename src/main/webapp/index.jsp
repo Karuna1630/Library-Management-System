@@ -11,142 +11,163 @@
 
 <div class="hero-section">
   <div class="hero-content">
-    <h1>Welcome to <span class="highlight">UniShelf</span></h1>
-    <p class="subtitle">Your one-stop solution for book reservations and student resources.</p>
+    <h1>Discover <span class="highlight">Knowledge</span> at Your Fingertips</h1>
+    <p class="subtitle">Your modern university library management system for seamless book reservations and academic resources.</p>
     <div class="hero-buttons">
-      <a href="browse.jsp" class="btn primary-btn"><i class="fas fa-book"></i> Browse Books</a>
-      <a href="login.jsp" class="btn secondary-btn"><i class="fas fa-sign-in-alt"></i> Member Login</a>
+      <a href="./view/pages/books.jsp" class="btn primary-btn"><i class="fas fa-book"></i> Explore Collection</a>
+      <a href="LoginServlet" class="btn secondary-btn"><i class="fas fa-user"></i> Sign In</a>
     </div>
+  </div>
+  <div class="hero-wave">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+      <path fill="#ffffff" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,149.3C960,160,1056,160,1152,144C1248,128,1344,96,1392,80L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+    </svg>
   </div>
 </div>
 
 <section class="features-section">
-  <h2>Our Services</h2>
+  <div class="section-header">
+    <h2>Smart Library Services</h2>
+    <p class="section-subtitle">Everything you need for an enhanced learning experience</p>
+  </div>
   <div class="features-container">
     <div class="feature-card">
-      <i class="fas fa-search feature-icon"></i>
-      <h3>Search Collection</h3>
-      <p>Explore our vast collection of books, journals, and research papers.</p>
+      <div class="feature-icon-container">
+        <i class="fas fa-search feature-icon"></i>
+      </div>
+      <h3>Intelligent Search</h3>
+      <p>Find books, journals, and research papers quickly with our advanced search system.</p>
     </div>
     <div class="feature-card">
-      <i class="fas fa-calendar-check feature-icon"></i>
-      <h3>Easy Reservations</h3>
-      <p>Reserve books online and pick them up at your convenience.</p>
+      <div class="feature-icon-container">
+        <i class="fas fa-calendar-check feature-icon"></i>
+      </div>
+      <h3>Simple Reservations</h3>
+      <p>Reserve materials online and receive notifications when they're ready for pickup.</p>
     </div>
     <div class="feature-card">
-      <i class="fas fa-history feature-icon"></i>
-      <h3>Manage Loans</h3>
-      <p>Track your borrowing history and manage returns efficiently.</p>
+      <div class="feature-icon-container">
+        <i class="fas fa-history feature-icon"></i>
+      </div>
+      <h3>Digital Tracking</h3>
+      <p>Monitor your borrowing history and manage returns with a personalized dashboard.</p>
     </div>
     <div class="feature-card">
-      <i class="fas fa-bell feature-icon"></i>
-      <h3>Notifications</h3>
-      <p>Get timely alerts about due dates and available reservations.</p>
+      <div class="feature-icon-container">
+        <i class="fas fa-bell feature-icon"></i>
+      </div>
+      <h3>Smart Alerts</h3>
+      <p>Get timely notifications about due dates, new arrivals, and available reservations.</p>
     </div>
   </div>
 </section>
 
 <section class="new-arrivals-section">
-  <h2>New Arrivals</h2>
+  <div class="section-header">
+    <h2>Latest Additions</h2>
+    <p class="section-subtitle">Fresh resources for your academic success</p>
+  </div>
   <div class="books-container">
     <!-- These would ideally be populated dynamically from your database -->
     <div class="book-card">
-      <div class="book-cover"><i class="fas fa-book"></i></div>
-      <h3>Programming in Java</h3>
-      <p>By John Smith</p>
-      <a href="book-details.jsp?id=1" class="btn small-btn">View Details</a>
+      <div class="book-cover-container">
+        <div class="book-cover"><i class="fas fa-book"></i></div>
+        <div class="book-tag">New</div>
+      </div>
+      <div class="book-info">
+        <h3>Advanced Java Programming</h3>
+        <p class="book-author">By John Smith</p>
+        <div class="book-meta">
+          <span><i class="fas fa-star"></i> 4.8</span>
+          <span><i class="fas fa-bookmark"></i> Computer Science</span>
+        </div>
+        <a href="book-details.jsp?id=1" class="btn small-btn">View Details</a>
+      </div>
     </div>
     <div class="book-card">
-      <div class="book-cover"><i class="fas fa-book"></i></div>
-      <h3>Database Systems</h3>
-      <p>By Mary Johnson</p>
-      <a href="book-details.jsp?id=2" class="btn small-btn">View Details</a>
+      <div class="book-cover-container">
+        <div class="book-cover"><i class="fas fa-book"></i></div>
+        <div class="book-tag">New</div>
+      </div>
+      <div class="book-info">
+        <h3>Modern Database Systems</h3>
+        <p class="book-author">By Mary Johnson</p>
+        <div class="book-meta">
+          <span><i class="fas fa-star"></i> 4.6</span>
+          <span><i class="fas fa-bookmark"></i> IT</span>
+        </div>
+        <a href="book-details.jsp?id=2" class="btn small-btn">View Details</a>
+      </div>
     </div>
     <div class="book-card">
-      <div class="book-cover"><i class="fas fa-book"></i></div>
-      <h3>Web Development</h3>
-      <p>By David Brown</p>
-      <a href="book-details.jsp?id=3" class="btn small-btn">View Details</a>
+      <div class="book-cover-container">
+        <div class="book-cover"><i class="fas fa-book"></i></div>
+        <div class="book-tag">Popular</div>
+      </div>
+      <div class="book-info">
+        <h3>Full-Stack Web Development</h3>
+        <p class="book-author">By David Brown</p>
+        <div class="book-meta">
+          <span><i class="fas fa-star"></i> 4.9</span>
+          <span><i class="fas fa-bookmark"></i> Development</span>
+        </div>
+        <a href="book-details.jsp?id=3" class="btn small-btn">View Details</a>
+      </div>
     </div>
     <div class="book-card">
-      <div class="book-cover"><i class="fas fa-book"></i></div>
-      <h3>AI Fundamentals</h3>
-      <p>By Sarah Wilson</p>
-      <a href="book-details.jsp?id=4" class="btn small-btn">View Details</a>
+      <div class="book-cover-container">
+        <div class="book-cover"><i class="fas fa-book"></i></div>
+        <div class="book-tag">Featured</div>
+      </div>
+      <div class="book-info">
+        <h3>AI & Machine Learning Principles</h3>
+        <p class="book-author">By Sarah Wilson</p>
+        <div class="book-meta">
+          <span><i class="fas fa-star"></i> 4.7</span>
+          <span><i class="fas fa-bookmark"></i> AI</span>
+        </div>
+        <a href="book-details.jsp?id=4" class="btn small-btn">View Details</a>
+      </div>
     </div>
+  </div>
+  <div class="section-action">
+    <a href="./view/pages/books.jsp" class="btn outline-btn">View All Books <i class="fas fa-arrow-right"></i></a>
   </div>
 </section>
 
 <section class="how-it-works">
-  <h2>How It Works</h2>
+  <div class="section-header">
+    <h2>How UniShelf Works</h2>
+    <p class="section-subtitle">Four simple steps to access our resources</p>
+  </div>
   <div class="steps-container">
     <div class="step">
       <div class="step-number">1</div>
       <h3>Create Account</h3>
-      <p>Register and set up your library profile</p>
+      <p>Register with your university credentials to set up your personal library profile</p>
     </div>
+    <div class="step-connector"></div>
     <div class="step">
       <div class="step-number">2</div>
-      <h3>Browse Books</h3>
-      <p>Search for books by title, author, or category</p>
+      <h3>Browse Collection</h3>
+      <p>Search our extensive catalog by title, author, subject, or category</p>
     </div>
+    <div class="step-connector"></div>
     <div class="step">
       <div class="step-number">3</div>
-      <h3>Reserve</h3>
-      <p>Reserve available books for pickup</p>
+      <h3>Reserve Materials</h3>
+      <p>Place holds on available resources with just a few clicks</p>
     </div>
+    <div class="step-connector"></div>
     <div class="step">
       <div class="step-number">4</div>
       <h3>Pick Up & Return</h3>
-      <p>Collect at the library and return on time</p>
+      <p>Visit the library at your convenience to collect and return items</p>
     </div>
   </div>
 </section>
 
-<section class="stats-section">
-  <div class="stat-item">
-    <i class="fas fa-book-open stat-icon"></i>
-    <div class="stat-number">10,000+</div>
-    <div class="stat-label">Books</div>
-  </div>
-  <div class="stat-item">
-    <i class="fas fa-users stat-icon"></i>
-    <div class="stat-number">5,000+</div>
-    <div class="stat-label">Members</div>
-  </div>
-  <div class="stat-item">
-    <i class="fas fa-university stat-icon"></i>
-    <div class="stat-number">50+</div>
-    <div class="stat-label">Categories</div>
-  </div>
-  <div class="stat-item">
-    <i class="fas fa-exchange-alt stat-icon"></i>
-    <div class="stat-number">1,000+</div>
-    <div class="stat-label">Monthly Loans</div>
-  </div>
-</section>
-
-<section class="testimonials-section">
-  <h2>What Our Users Say</h2>
-  <div class="testimonials-container">
-    <div class="testimonial">
-      <div class="quote"><i class="fas fa-quote-left"></i></div>
-      <p>UniShelf has completely transformed how I access library resources. The reservation system is so convenient!</p>
-      <div class="user">- John D., Computer Science Student</div>
-    </div>
-    <div class="testimonial">
-      <div class="quote"><i class="fas fa-quote-left"></i></div>
-      <p>As a professor, I appreciate how easy it is to recommend books to my students through this platform.</p>
-      <div class="user">- Dr. Emily R., Faculty Member</div>
-    </div>
-  </div>
-</section>
-
-<section class="cta-section">
-  <h2>Ready to Get Started?</h2>
-  <p>Join thousands of students and faculty who use UniShelf daily for their academic needs.</p>
-  <a href="register.jsp" class="btn primary-btn large-btn">Sign Up Now</a>
-</section>
+<%@include file="view/components/footer.jsp" %>
 
 </body>
 </html>
