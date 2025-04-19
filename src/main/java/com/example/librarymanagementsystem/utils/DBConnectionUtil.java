@@ -17,9 +17,9 @@ public class DBConnectionUtil {
 
     // Static initialization block to load properties once when the class is loaded
     static {
-        try (InputStream is = DBConnectionUtil.class.getClassLoader().getResourceAsStream("application.properties")) {
+        try (InputStream is = DBConnectionUtil.class.getClassLoader().getResourceAsStream("db.properties")) {
             if (is == null) {
-                throw new RuntimeException("application.properties file not found in classpath");
+                throw new RuntimeException("db.properties file not found in classpath");
             }
 
             Properties prop = new Properties();
