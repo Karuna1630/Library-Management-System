@@ -1,19 +1,25 @@
-/* style.css - External CSS file for UniShelf Library Management System */
+/* style.css - Modern External CSS file for UniShelf Library Management System */
 
 /* ----------------- Global Styles ----------------- */
 :root {
-    --primary-color: #1a5276;
-    --secondary-color: #2980b9;
-    --accent-color: #f39c12;
-    --light-color: #ecf0f1;
-    --dark-color: #2c3e50;
-    --success-color: #27ae60;
-    --error-color: #c0392b;
-    --gray-light: #f1f1f1;
-    --gray-medium: #bdc3c7;
-    --gray-dark: #7f8c8d;
-    --box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    --primary-color: #2563eb;
+    --primary-dark: #1e40af;
+    --primary-light: #3b82f6;
+    --secondary-color: #f97316;
+    --dark-color: #1e293b;
+    --text-color: #475569;
+    --light-color: #f8fafc;
+    --gray-100: #f1f5f9;
+    --gray-200: #e2e8f0;
+    --gray-300: #cbd5e1;
+    --gray-400: #94a3b8;
+    --gray-500: #64748b;
+    --gray-600: #475569;
+    --success-color: #10b981;
+    --error-color: #ef4444;
+    --box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
     --transition: all 0.3s ease;
+    --card-radius: 12px;
 }
 
 * {
@@ -25,29 +31,32 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    color: var(--dark-color);
+    color: var(--text-color);
     background-color: var(--light-color);
+    overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 1rem;
     color: var(--dark-color);
+    line-height: 1.3;
 }
 
 h1 {
-    font-size: 2.5rem;
+    font-size: 3rem;
     margin-bottom: 1.5rem;
 }
 
 h2 {
-    font-size: 2rem;
+    font-size: 2.25rem;
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 0.5rem;
 }
 
 h3 {
     font-size: 1.3rem;
+    font-weight: 600;
 }
 
 p {
@@ -56,16 +65,17 @@ p {
 
 a {
     text-decoration: none;
-    color: var(--secondary-color);
+    color: var(--primary-color);
     transition: var(--transition);
 }
 
 a:hover {
-    color: var(--primary-color);
+    color: var(--primary-dark);
 }
 
 section {
-    padding: 4rem 2rem;
+    padding: 5rem 2rem;
+    position: relative;
 }
 
 .container {
@@ -74,40 +84,92 @@ section {
     padding: 0 1rem;
 }
 
+.section-header {
+    max-width: 700px;
+    margin: 0 auto 3rem;
+    text-align: center;
+}
+
+
+.section-subtitle {
+    font-size: 1.1rem;
+    color: var(--gray-500);
+    margin-bottom: 2rem;
+}
+
+
+.section-action {
+    text-align: center;
+    margin-top: 3rem;
+}
+
 /* ----------------- Button Styles ----------------- */
 .btn {
-    display: inline-block;
-    padding: 0.7rem 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.75rem;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
     font-weight: 600;
     transition: var(--transition);
     text-align: center;
+    gap: 0.5rem;
 }
 
 .primary-btn {
     background-color: var(--primary-color);
     color: white;
+    box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
 }
 
 .primary-btn:hover {
-    background-color: var(--secondary-color);
+    background-color: var(--primary-dark);
     color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(37, 99, 235, 0.25);
 }
 
 .secondary-btn {
     background-color: white;
     color: var(--primary-color);
-    border: 2px solid var(--primary-color);
+    border: 2px solid transparent;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
 .secondary-btn:hover {
-    background-color: var(--light-color);
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
+
+.outline-btn {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.outline-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.text-btn {
+    background-color: transparent;
+    color: var(--primary-color);
+    padding: 0.75rem 1rem;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.text-btn:hover {
+    color: var(--primary-dark);
 }
 
 .small-btn {
-    padding: 0.4rem 0.8rem;
+    padding: 0.5rem 1rem;
     font-size: 0.9rem;
 }
 
@@ -116,80 +178,92 @@ section {
     font-size: 1.1rem;
 }
 
-/* ----------------- Navigation ----------------- */
-/* Note: This is a placeholder. You should modify based on your navbar.jsp implementation */
-nav {
-    background-color: var(--primary-color);
-    padding: 1rem 2rem;
-    box-shadow: var(--box-shadow);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-nav .logo {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: white;
-}
-
-nav ul {
-    display: flex;
-    list-style: none;
-}
-
-nav ul li {
-    margin-left: 1.5rem;
-}
-
-nav ul li a {
-    color: white;
-}
-
-nav ul li a:hover {
-    color: var(--accent-color);
-}
-
-/* ----------------- Hero Section ----------------- */
+/* ----------------- Hero Section Fixes ----------------- */
 .hero-section {
-    background: linear-gradient(rgba(26, 82, 118, 0.8), rgba(26, 82, 118, 0.9)), url('../images/library-bg.jpg');
-    background-size: cover;
-    background-position: center;
-    color: white;
+    display: flex;
+    align-items: center;
+    min-height: 80vh;
     text-align: center;
-    padding: 6rem 2rem;
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+    color: white;
+    position: relative;
+    overflow: hidden;
 }
 
 .hero-content {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
+    position: relative;
+    z-index: 10;
+    padding: 2rem;
 }
 
 .hero-content h1 {
-    font-size: 3rem;
+    font-size: 3.5rem;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    font-weight: 800;
     color: white;
-    margin-bottom: 1rem;
 }
 
-.highlight {
-    color: var(--accent-color);
-}
-
-.subtitle {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
+.hero-content .subtitle {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    max-width: 700px;
+    margin: 0 auto 2.5rem;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .hero-buttons {
     display: flex;
     justify-content: center;
-    gap: 1rem;
+    gap: 1.5rem;
+    flex-wrap: wrap;
     margin-top: 2rem;
 }
 
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero-section {
+        min-height: 70vh;
+        padding: 3rem 1.5rem;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-content .subtitle {
+        font-size: 1.1rem;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .hero-buttons .btn {
+        width: 100%;
+        max-width: 250px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+
+    .hero-content .subtitle {
+        font-size: 1rem;
+    }
+}
 /* ----------------- Features Section ----------------- */
 .features-section {
     background-color: white;
+    position: relative;
+    z-index: 2;
 }
 
 .features-container {
@@ -203,28 +277,48 @@ nav ul li a:hover {
 .feature-card {
     flex: 1 1 250px;
     max-width: 300px;
-    background-color: var(--light-color);
-    border-radius: 8px;
+    background-color: white;
+    border-radius: var(--card-radius);
     padding: 2rem;
     text-align: center;
     box-shadow: var(--box-shadow);
     transition: var(--transition);
+    border: 1px solid var(--gray-200);
 }
 
 .feature-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+    border-color: var(--gray-300);
+}
+
+.feature-icon-container {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
 }
 
 .feature-icon {
-    font-size: 2.5rem;
-    color: var(--accent-color);
+    font-size: 1.75rem;
+    color: white;
+}
+
+.feature-card h3 {
     margin-bottom: 1rem;
+}
+
+.feature-card p {
+    color: var(--gray-500);
 }
 
 /* ----------------- New Arrivals Section ----------------- */
 .new-arrivals-section {
-    background-color: var(--gray-light);
+    background-color: var(--gray-100);
 }
 
 .books-container {
@@ -232,49 +326,87 @@ nav ul li a:hover {
     flex-wrap: wrap;
     justify-content: center;
     gap: 2rem;
+    margin-top: 1rem;
 }
 
 .book-card {
-    flex: 1 1 200px;
-    max-width: 250px;
+    flex: 1 1 250px;
+    max-width: 300px;
     background-color: white;
-    border-radius: 8px;
+    border-radius: var(--card-radius);
     overflow: hidden;
     box-shadow: var(--box-shadow);
     transition: var(--transition);
-    padding: 1.5rem;
-    text-align: center;
+    border: 1px solid var(--gray-200);
 }
 
 .book-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+    border-color: var(--gray-300);
+}
+
+.book-cover-container {
+    position: relative;
 }
 
 .book-cover {
-    height: 150px;
-    background-color: var(--gray-light);
+    height: 160px;
+    background: linear-gradient(135deg, #e0f2fe, #bae6fd);
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 1rem;
-    border-radius: 4px;
 }
 
 .book-cover i {
     font-size: 3rem;
-    color: var(--gray-dark);
+    color: var(--primary-dark);
+}
+
+.book-tag {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.book-info {
+    padding: 1.5rem;
 }
 
 .book-card h3 {
     font-size: 1.1rem;
     margin-bottom: 0.5rem;
+    line-height: 1.4;
 }
 
-.book-card p {
-    color: var(--gray-dark);
+.book-author {
+    color: var(--gray-500);
     margin-bottom: 1rem;
     font-size: 0.9rem;
+}
+
+.book-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+    font-size: 0.85rem;
+    color: var(--gray-500);
+}
+
+.book-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.book-meta i {
+    color: var(--secondary-color);
 }
 
 /* ----------------- How It Works Section ----------------- */
@@ -285,22 +417,25 @@ nav ul li a:hover {
 .steps-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
-    gap: 1.5rem;
+    justify-content: center;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 .step {
     flex: 1 1 200px;
-    max-width: 250px;
+    max-width: 220px;
     text-align: center;
-    padding: 1.5rem;
+    padding: 1rem;
     position: relative;
+    z-index: 1;
 }
 
 .step-number {
-    width: 50px;
-    height: 50px;
-    background-color: var(--primary-color);
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
     color: white;
     border-radius: 50%;
     display: flex;
@@ -308,157 +443,71 @@ nav ul li a:hover {
     justify-content: center;
     font-size: 1.5rem;
     font-weight: bold;
-    margin: 0 auto 1rem;
+    margin: 0 auto 1.5rem;
+    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
 }
 
-/* ----------------- Stats Section ----------------- */
-.stats-section {
-    background-color: var(--primary-color);
-    color: white;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    text-align: center;
-    padding: 3rem 2rem;
+.step-connector {
+    flex: 0 1 40px;
+    height: 4px;
+    background-color: var(--primary-light);
+    position: relative;
+    z-index: 0;
+    opacity: 0.3;
 }
 
-.stat-item {
-    flex: 1 1 200px;
-    max-width: 250px;
-    padding: 1.5rem;
+.step h3 {
+    margin-bottom: 0.75rem;
 }
 
-.stat-icon {
-    font-size: 2.5rem;
-    color: var(--accent-color);
-    margin-bottom: 1rem;
+.step p {
+    color: var(--gray-500);
+    font-size: 0.95rem;
 }
 
-.stat-number {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-}
 
-.stat-label {
-    font-size: 1.1rem;
-}
-
-/* ----------------- Testimonials Section ----------------- */
-.testimonials-section {
-    background-color: var(--light-color);
-}
-
-.testimonials-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2rem;
-}
-
-.testimonial {
-    flex: 1 1 300px;
-    max-width: 500px;
-    background-color: white;
-    border-radius: 8px;
-    padding: 2rem;
-    box-shadow: var(--box-shadow);
-}
-
-.quote {
-    font-size: 1.5rem;
-    color: var(--accent-color);
-    margin-bottom: 1rem;
-}
-
-.user {
-    font-style: italic;
-    color: var(--gray-dark);
-    text-align: right;
-    margin-top: 1rem;
-}
-
-/* ----------------- CTA Section ----------------- */
-.cta-section {
-    background-color: var(--secondary-color);
-    color: white;
-    text-align: center;
-    padding: 4rem 2rem;
-}
-
-.cta-section h2 {
-    color: white;
-}
-
-.cta-section .btn {
-    margin-top: 1.5rem;
-    background-color: var(--accent-color);
-    color: var(--dark-color);
-}
-
-.cta-section .btn:hover {
-    background-color: white;
-    color: var(--dark-color);
-}
-
-/* ----------------- Footer ----------------- */
-/* Note: This is a placeholder. You should modify based on your footer.jsp implementation */
-footer {
-    background-color: var(--dark-color);
-    color: white;
-    padding: 3rem 2rem;
-    text-align: center;
-}
-
-footer .logo {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-}
-
-footer ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin-bottom: 1.5rem;
-}
-
-footer ul li a {
-    color: var(--gray-medium);
-}
-
-footer ul li a:hover {
-    color: white;
-}
-
-footer .social-icons {
-    margin-bottom: 1.5rem;
-}
-
-footer .social-icons a {
-    margin: 0 0.5rem;
-    font-size: 1.2rem;
-    color: var(--gray-medium);
-}
-
-footer .social-icons a:hover {
-    color: white;
-}
-
-footer .copyright {
-    font-size: 0.9rem;
-    color: var(--gray-medium);
-}
-
-/* ----------------- Responsive Design ----------------- */
-@media (max-width: 768px) {
+/* ----------------- Responsive Styles ----------------- */
+@media (max-width: 992px) {
     h1 {
-        font-size: 2rem;
+        font-size: 2.5rem;
     }
 
     h2 {
-        font-size: 1.8rem;
+        font-size: 2rem;
+    }
+
+    section {
+        padding: 4rem 1.5rem;
+    }
+
+    .hero-content h1 {
+        font-size: 3rem;
+    }
+
+    .steps-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .step {
+        max-width: 100%;
+        margin-bottom: 2rem;
+    }
+
+    .step-connector {
+        width: 4px;
+        height: 40px;
+        margin: 0.5rem 0;
+    }
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.25rem;
+    }
+
+    h2 {
+        font-size: 1.75rem;
     }
 
     section {
@@ -466,15 +515,15 @@ footer .copyright {
     }
 
     .hero-section {
-        padding: 4rem 1rem;
+        padding: 6rem 1.5rem 4rem;
     }
 
     .hero-content h1 {
-        font-size: 2.2rem;
+        font-size: 2.5rem;
     }
 
     .subtitle {
-        font-size: 1rem;
+        font-size: 1.1rem;
     }
 
     .hero-buttons {
@@ -482,14 +531,27 @@ footer .copyright {
         gap: 1rem;
     }
 
-    .feature-card, .book-card, .step, .testimonial {
-        max-width: 100%;
+    .btn {
+        width: 100%;
+    }
+
+    .feature-card, .book-card {
+        flex: 1 1 100%;
+        max-width: 350px;
+    }
+
+    .stats-container {
+        gap: 2rem;
+    }
+
+    .stat-item {
+        flex: 1 1 150px;
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 576px) {
     h1 {
-        font-size: 1.8rem;
+        font-size: 2rem;
     }
 
     h2 {
@@ -497,19 +559,128 @@ footer .copyright {
     }
 
     .hero-content h1 {
-        font-size: 1.8rem;
+        font-size: 2rem;
     }
 
-    .btn {
+    .step-number {
+        width: 50px;
+        height: 50px;
+        font-size: 1.25rem;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+    }
+
+    .cta-section {
+        padding: 4rem 1rem;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+    }
+
+    .cta-buttons .btn {
         width: 100%;
     }
+}
 
-    .stats-section {
-        flex-direction: column;
-        align-items: center;
+/* ----------------- Animations ----------------- */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.feature-card, .book-card, .testimonial, .step {
+    animation: fadeIn 0.6s ease forwards;
+}
+
+.feature-card {
+    animation-delay: 0.1s;
+}
+
+.book-card:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+.book-card:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.book-card:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+.book-card:nth-child(4) {
+    animation-delay: 0.5s;
+}
+
+.testimonial:nth-child(1) {
+    animation-delay: 0.3s;
+}
+
+.testimonial:nth-child(2) {
+    animation-delay: 0.4s;
+}
+
+.step:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.step:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.step:nth-child(5) {
+    animation-delay: 0.3s;
+}
+
+.step:nth-child(7) {
+    animation-delay: 0.4s;
+}
+
+/* ----------------- Utility Classes ----------------- */
+.hidden {
+    display: none !important;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
+.mt-5 { margin-top: 3rem; }
+
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 2rem; }
+.mb-5 { margin-bottom: 3rem; }
+
+/* ----------------- Print Styles ----------------- */
+@media print {
+    .hero-section, .hero-buttons, .navbar {
+        display: none;
     }
 
-    .stat-item {
-        margin-bottom: 2rem;
+    body {
+        background-color: white;
+        color: black;
+        font-size: 12pt;
+    }
+
+    a::after {
+        content: " (" attr(href) ")";
+        font-size: 0.8em;
+        font-weight: normal;
     }
 }

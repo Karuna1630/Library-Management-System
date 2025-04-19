@@ -179,6 +179,31 @@ body {
     color: var(--primary-color);
 }
 
+/* Make sure this selector matches exactly what's in your HTML */
+.input-container select.form-select {
+    width: 100%;
+    padding: 0.9rem 1rem 0.9rem 3rem;
+    font-size: 1rem;
+    border: 1.5px solid var(--gray-300);
+    border-radius: 8px;
+    background-color: var(--gray-100);
+    color: var(--text-color);
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236c757d' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+}
+
+.input-container select.form-select:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+    background-color: white;
+}
+
 .file-input-container {
     width: 100%;
     margin-bottom: 1.5rem;
