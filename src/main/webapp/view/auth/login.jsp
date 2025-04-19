@@ -23,7 +23,10 @@
             </div>
         </div>
 
-        <form class="loginForm" id="loginForm" action="/login" method="POST" onsubmit="return validateLoginForm('loginForm')">
+        <form class="loginForm" id="loginForm"
+              action="${pageContext.request.contextPath}/LoginServlet"
+              method="POST"
+              onsubmit="return validateLoginForm('loginForm')">
             <h2>Welcome Back</h2>
             <p>Sign in to access your library account.</p>
 
@@ -55,7 +58,7 @@
             <button type="submit" class="btn">Sign In</button>
 
             <div class="bottom-link">
-                Don't have an account? <a href="./register.jsp">Create Account</a>
+                Don't have an account? <a href="RegisterServlet">Create Account</a>
             </div>
         </form>
 
