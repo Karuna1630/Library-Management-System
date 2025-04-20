@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
-  User: USER-PC
-  Date: 4/16/2025
-  Time: 10:53 PM
+  User: ASUS
+  Date: 18-04-2025
+  Time: 01:55 am
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -33,6 +33,7 @@
                 <li><a href="${pageContext.request.contextPath}/index.jsp" class="footer-link">Home</a></li>
                 <li><a href="${pageContext.request.contextPath}/view/pages/books.jsp" class="footer-link">Books</a></li>
                 <li><a href="${pageContext.request.contextPath}/view/pages/aboutus.jsp" class="footer-link">About Us</a></li>
+                <li><a href="${pageContext.request.contextPath}/view/pages/contact.jsp" class="footer-link">Contact Us</a></li>
             </ul>
         </div>
 
