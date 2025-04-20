@@ -2,9 +2,11 @@ package com.example.librarymanagementsystem.services;
 
 import com.example.librarymanagementsystem.dao.UserDAO;
 import com.example.librarymanagementsystem.model.User;
+import com.example.librarymanagementsystem.utils.PasswordHashUtil;
 
 public class AuthService {
     public static int register(String name, String email, String password, String confirmPassword, String role, byte[] image) {
+//        password = PasswordHashUtil.hashPassword(password);
         User user = new User();
         user.setFullName(name);
         user.setEmail(email);
@@ -23,5 +25,7 @@ public class AuthService {
             e.printStackTrace();
             return null;
         }
+        // if(uer !=null){
     }
+
 }
