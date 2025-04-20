@@ -1,7 +1,7 @@
 package com.example.librarymanagementsystem.model;
 
 public class Book {
-    private int ookId;
+    private int bookId;
     private String title;
     private String author;
     private int publicationYear;
