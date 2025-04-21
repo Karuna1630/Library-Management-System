@@ -1,4 +1,5 @@
 package com.example.librarymanagementsystem.utils;
+
 import org.mindrot.jbcrypt.BCrypt;
 
 public class PasswordHashUtil {

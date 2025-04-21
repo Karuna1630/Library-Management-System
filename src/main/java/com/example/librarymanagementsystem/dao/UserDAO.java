@@ -8,7 +8,6 @@ import java.util.Date;
 
 public class UserDAO {
     private static final String INSERT_USER = "INSERT INTO users(full_name, user_email, password, confirmPassword, role, profile_picture, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
     public static int registerUser(User user) {
         try (Connection connection = DBConnectionUtil.getConnection();
              PreparedStatement ps = connection.prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS)) {
@@ -28,6 +27,8 @@ public class UserDAO {
             ps.setTimestamp(8, timestamp);
 
             int affectedRows = ps.executeUpdate();
+
+
 
             if (affectedRows > 0) {
                 try (ResultSet generatedKeys = ps.getGeneratedKeys()) {

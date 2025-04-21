@@ -27,7 +27,7 @@
               action="<%= request.getContextPath()%>/RegisterServlet"
               method="POST"
               enctype="multipart/form-data"
-              onsubmit="return validateForm('registerForm')">
+              onsubmit="return validateRegisterForm('registerForm')">
             <h2>Create an Account</h2>
             <p>Your journey to smarter reading starts here.</p>
 
@@ -84,7 +84,7 @@
                         <i class="fas fa-upload"></i>
                         <span>Choose a file</span>
                     </label>
-                    <input type="file" id="image" name="image" accept="image/*" onchange="previewImage(event)">
+                    <input type="file" id="image" name="image" accept="image/*" onchange="previewImage()">
                 </div>
 
                 <div class="image-preview-container">
@@ -94,6 +94,12 @@
                          alt="Profile Preview" />
                     <p class="preview-text">Upload an image to change the default profile picture</p>
                 </div>
+                <%-- Add error display for image upload --%>
+                <% if (request.getAttribute("errorMessage") != null) { %>
+                <div class="error-message" style="color: #e74c3c; font-size: 0.8rem; margin-top: 5px;">
+                    <%= request.getAttribute("errorMessage") %>
+                </div>
+                <% } %>
             </div>
 
             <button type="submit" class="btn">Register</button>
@@ -108,5 +114,24 @@
         </div>
     </div>
 </div>
+<script>
+    function previewImage() {
+        const fileInput = document.getElementById('image');
+        const preview = document.getElementById('imagePreview');
+        const previewText = document.querySelector('.preview-text');
+
+        if (fileInput.files && fileInput.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+                if (previewText) previewText.style.display = 'none';
+            };
+
+            reader.readAsDataURL(fileInput.files[0]);
+        }
+    }
+</script>
 </body>
 </html>

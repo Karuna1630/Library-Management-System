@@ -29,6 +29,7 @@ public class RegisterServlet extends HttpServlet {
         String confirmPassword = request.getParameter("confirmPassword");
         String role = request.getParameter("role");
 
+
         // Validate inputs
         if (name == null || name.trim().isEmpty()) {
             request.setAttribute("errorMessage", "Name is required");
@@ -59,10 +60,18 @@ public class RegisterServlet extends HttpServlet {
         byte[] imageBytes = null;
 
         if (imagePart != null && imagePart.getSize() > 0) {
+            // Validate image type
+            String contentType = imagePart.getContentType();
+            if (!contentType.startsWith("image/")) {
+                request.setAttribute("errorMessage", "Only image files are allowed");
+                request.getRequestDispatcher("/view/auth/register.jsp").forward(request, response);
+                return;
+            }
+
             imageBytes = imagePart.getInputStream().readAllBytes();
         }
 
-        // Register user through the AuthService
+        // Register user
         int userID = AuthService.register(name, email, password, confirmPassword, role, imageBytes);
 
         if (userID > 0) {
@@ -75,4 +84,3 @@ public class RegisterServlet extends HttpServlet {
         }
     }
 }
-

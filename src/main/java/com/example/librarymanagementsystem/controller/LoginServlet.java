@@ -12,31 +12,31 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Check if there's a success message from registration
+        // Check if user is already logged in
+        HttpSession existingSession = request.getSession(false);
+        if (existingSession != null && existingSession.getAttribute("user") != null) {
+            User user = (User) existingSession.getAttribute("user");
+            redirectBasedOnRole(user, request, response);
+            return;
+        }
+
+        // Check for success message from registration
         String message = request.getParameter("message");
         if (message != null && !message.isEmpty()) {
             request.setAttribute("successMessage", message);
         }
 
-        // Forward to the login JSP page
         request.getRequestDispatcher("/view/auth/login.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Get form parameters
         String email = request.getParameter("user_email");
         String password = request.getParameter("password");
 
         // Validate inputs
-        if (email == null || email.trim().isEmpty()) {
-            request.setAttribute("errorMessage", "Email is required");
-            request.getRequestDispatcher("/view/auth/login.jsp").forward(request, response);
-            return;
-        }
-
-        if (password == null || password.trim().isEmpty()) {
-            request.setAttribute("errorMessage", "Password is required");
+        if (email == null || email.trim().isEmpty() || password == null || password.trim().isEmpty()) {
+            request.setAttribute("errorMessage", "Email and password are required");
             request.getRequestDispatcher("/view/auth/login.jsp").forward(request, response);
             return;
         }
@@ -45,22 +45,42 @@ public class LoginServlet extends HttpServlet {
         User authenticatedUser = AuthService.login(email, password);
 
         if (authenticatedUser != null) {
-            // Login successful - create session and store user details
-            HttpSession session = request.getSession();
-            session.setAttribute("user", authenticatedUser);
-            session.setAttribute("userEmail", authenticatedUser.getEmail());
-            session.setAttribute("userRole", authenticatedUser.getRole().toString());
-
-            // Redirect based on role
-            if (authenticatedUser.getRole() == User.Role.admin) {
-                response.sendRedirect(request.getContextPath() + "/view/dashboard/admin-dashboard.jsp");
-            } else {
-                response.sendRedirect(request.getContextPath() + "/index.jsp");
+            // Create new session and invalidate any existing one
+            HttpSession oldSession = request.getSession(false);
+            if (oldSession != null) {
+                oldSession.invalidate();
             }
+
+            // Create new session
+            HttpSession newSession = request.getSession(true);
+
+            // Set session attributes
+            newSession.setAttribute("user", authenticatedUser);
+            newSession.setAttribute("userEmail", authenticatedUser.getEmail());
+            newSession.setAttribute("userRole", authenticatedUser.getRole().toString());
+
+            // Set session timeout (30 minutes)
+            newSession.setMaxInactiveInterval(30 * 60);
+
+            // Store image in session if exists
+            if (authenticatedUser.getImage() != null) {
+                String base64Image = java.util.Base64.getEncoder().encodeToString(authenticatedUser.getImage());
+                newSession.setAttribute("base64Image", base64Image);
+            }
+
+            redirectBasedOnRole(authenticatedUser, request, response);
         } else {
-            // Login failed
             request.setAttribute("errorMessage", "Invalid email or password");
             request.getRequestDispatcher("/view/auth/login.jsp").forward(request, response);
+        }
+    }
+
+    private void redirectBasedOnRole(User user, HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+        if (user.getRole() == User.Role.admin) {
+            response.sendRedirect(request.getContextPath() + "/AdminServlet?action=dashboard");
+        } else {
+            response.sendRedirect(request.getContextPath() + "/index.jsp");
         }
     }
 }
