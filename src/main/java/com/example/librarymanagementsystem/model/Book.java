@@ -5,16 +5,16 @@ public class Book {
     private String title;
     private String author;
     private int publicationYear;
-    private int categoryId;
+    private String category;
     private int stock;
 
 
-    public Book(int bookId, String title, String author, int publicationYear, int categoryId, int stock) {
+    public Book(int bookId, String title, String author, int publicationYear, String category, int stock) {
         this.bookId = bookId;
         this.title = title;
         this.author = author;
         this.publicationYear = publicationYear;
-        this.categoryId = categoryId;
+        this.category = category;
         this.stock = stock;
     }
 
@@ -51,12 +51,12 @@ public class Book {
         this.publicationYear = publicationYear;
     }
 
-    public int getCategory() {
-        return categoryId;
+    public String getCategory() {
+        return category;
     }
 
-    public void setCategory(int categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public int getStock() {
@@ -71,6 +71,6 @@ public class Book {
     @Override
     public String toString() {
         return "Book [bookId=" + bookId + ", title=" + title + ", author=" + author +
-                ", publicationYear=" + publicationYear + ", category=" + categoryId + ", stock=" + stock + "]";
+                ", publicationYear=" + publicationYear + ", category=" + category + ", stock=" + stock + "]";
     }
 }
