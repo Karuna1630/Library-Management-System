@@ -19,7 +19,7 @@
 </head>
 <body>
 <%@include file="../components/navbar.jsp" %>
-
+<%User user = (User) session.getAttribute("user");%>
 <div class="admin-container">
     <!-- Sidebar Navigation -->
     <aside class="admin-sidebar">

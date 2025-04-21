@@ -53,7 +53,7 @@ public class LoginServlet extends HttpServlet {
 
             // Redirect based on role
             if (authenticatedUser.getRole() == User.Role.admin) {
-                response.sendRedirect(request.getContextPath() + "/admin/dashboard.jsp");
+                response.sendRedirect(request.getContextPath() + "/view/dashboard/admin-dashboard.jsp");
             } else {
                 response.sendRedirect(request.getContextPath() + "/index.jsp");
             }
