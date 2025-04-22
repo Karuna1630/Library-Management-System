@@ -2,6 +2,7 @@ package com.example.librarymanagementsystem.dao;
 
 import com.example.librarymanagementsystem.model.User;
 import com.example.librarymanagementsystem.utils.DBConnectionUtil;
+import com.example.librarymanagementsystem.utils.PasswordHashUtil;
 
 import java.sql.*;
 import java.util.Date;
@@ -44,29 +45,38 @@ public class UserDAO {
         return -1;
     }
 
-    public static User loginUser(String email, String password) {
-        final String SELECT_USER_BY_EMAIL_PASSWORD = "SELECT user_id, full_name, user_email, password, role, profile_picture " + "FROM users WHERE user_email = ? AND password = ?";
+    public static User getUserByEmail(String email) {
+        final String SELECT_USER_BY_EMAIL = "SELECT user_id, full_name, user_email, password, role, profile_picture " +
+                "FROM users WHERE user_email = ?";
 
         try (Connection connection = DBConnectionUtil.getConnection();
-             PreparedStatement ps = connection.prepareStatement(SELECT_USER_BY_EMAIL_PASSWORD)) {
+             PreparedStatement ps = connection.prepareStatement(SELECT_USER_BY_EMAIL)) {
 
             ps.setString(1, email);
-            ps.setString(2, password);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    User authenticatedUser = new User();
-                    authenticatedUser.setId(rs.getInt("user_id"));
-                    authenticatedUser.setFullName(rs.getString("full_name"));
-                    authenticatedUser.setEmail(rs.getString("user_email"));
-                    authenticatedUser.setRole(User.Role.valueOf(rs.getString("role")));
-                    authenticatedUser.setImage(rs.getBytes("profile_picture"));
-                    return authenticatedUser;
+                    User user = new User();
+                    user.setId(rs.getInt("user_id"));
+                    user.setFullName(rs.getString("full_name"));
+                    user.setEmail(rs.getString("user_email"));
+                    user.setPassword(rs.getString("password"));
+                    user.setRole(User.Role.valueOf(rs.getString("role")));
+                    user.setImage(rs.getBytes("profile_picture"));
+                    return user;
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Error authenticating user: " + e.getMessage());
-            throw new RuntimeException("Database error during authentication", e);
+            System.err.println("Error getting user by email: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static User loginUser(String email, String password) {
+        User user = getUserByEmail(email);
+        if (user != null && PasswordHashUtil.checkPassword(password, user.getPassword())) {
+            return user;
         }
         return null;
     }
