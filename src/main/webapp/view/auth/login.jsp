@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>UniShelf - University Library Management System</title>
@@ -50,8 +50,8 @@
 
             <div class="remember-forgot">
                 <div class="remember-me">
-                    <input type="checkbox" id="remember" name="remember">
-                    <label for="remember">Remember me</label>
+                    <input type="checkbox" id="rememberMe" name="rememberMe">
+                    <label for="rememberMe">Remember me</label>
                 </div>
                 <a href="/forgot-password" class="forgot-link">Forgot Password?</a>
             </div>
