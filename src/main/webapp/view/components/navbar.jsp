@@ -18,10 +18,11 @@
 
         <div class="navbar-menu">
             <ul class="nav-links">
-                <li><a href="<%= request.getContextPath() %>/index.jsp" class="nav-link">Home</a></li>
-                <li><a href="<%= request.getContextPath() %>/view/pages/books.jsp" class="nav-link">Books</a></li>
-                <li><a href="<%= request.getContextPath() %>/view/pages/aboutus.jsp" class="nav-link">About Us</a></li>
-                <li><a href="<%= request.getContextPath() %>/view/pages/contact.jsp" class="nav-link">Contact Us</a></li>
+                <li><a href="<%= request.getContextPath() %>/IndexServlet" class="nav-link">Home</a></li>
+                <li><a href="<%= request.getContextPath() %>/BookServlet" class="nav-link">Books</a></li>
+                <li><a href="<%= request.getContextPath() %>/AboutUsServlet" class="nav-link">About Us</a></li>
+                <li><a href="<%= request.getContextPath() %>/ContactServlet" class="nav-link">Contact Us</a></li>
+
             </ul>
         </div>
 
@@ -47,7 +48,7 @@
                     <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="dropdown-content">
-                    <a href="<%= request.getContextPath() %>/view/pages/profile.jsp">
+                    <a href="<%= request.getContextPath() %>/ProfileServlet">
                         <i class="fas fa-user"></i> Profile
                     </a>
                     <a href="<%= request.getContextPath() %>/LogoutServlet">
@@ -61,7 +62,6 @@
                 <i class="fas fa-store"></i>
             </a>
         </div>
-
         <button class="navbar-toggle">
             <i class="fas fa-bars"></i>
         </button>
