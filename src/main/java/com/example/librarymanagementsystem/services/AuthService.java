@@ -6,12 +6,10 @@ import com.example.librarymanagementsystem.utils.PasswordHashUtil;
 
 public class AuthService {
     public static int register(String name, String email, String password, String confirmPassword, String role, byte[] image) {
-        // First validate passwords match
         if (!password.equals(confirmPassword)) {
-            return -1; // Or throw an exception
+            return -1;
         }
 
-        // Hash both passwords
         String hashedPassword = PasswordHashUtil.hashPassword(password);
         String hashedConfirmPassword = PasswordHashUtil.hashPassword(confirmPassword);
 
@@ -28,18 +26,18 @@ public class AuthService {
 
     public static User login(String email, String password) {
         try {
-            // First get user by email
             User user = UserDAO.getUserByEmail(email);
-            if (user != null) {
-                // Verify password against stored hash
-                if (PasswordHashUtil.checkPassword(password, user.getPassword())) {
-                    return user;
-                }
+            if (user != null && PasswordHashUtil.checkPassword(password, user.getPassword())) {
+                return user;
             }
             return null;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static User validateRememberMeToken(String email) {
+        return UserDAO.getUserByEmail(email);
     }
 }
