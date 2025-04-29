@@ -71,6 +71,7 @@ public class RegisterServlet extends HttpServlet {
             imageBytes = imagePart.getInputStream().readAllBytes();
         }
 
+
         // Register user
         int userID = AuthService.register(name, email, password, confirmPassword, role, imageBytes);
 

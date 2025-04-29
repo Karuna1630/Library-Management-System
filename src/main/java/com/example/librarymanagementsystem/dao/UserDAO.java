@@ -80,4 +80,34 @@ public class UserDAO {
         }
         return null;
     }
+
+
+    public static boolean updateUser(User user) {
+        final String UPDATE_USER = "UPDATE users SET full_name = ?, password = ?, profile_picture = ?, updated_at = ? WHERE user_email = ?";
+
+        try (Connection connection = DBConnectionUtil.getConnection();
+             PreparedStatement ps = connection.prepareStatement(UPDATE_USER)) {
+
+            Date currentDate = new Date();
+            java.sql.Timestamp timestamp = new java.sql.Timestamp(currentDate.getTime());
+
+            ps.setString(1, user.getFullName());
+            ps.setString(2, user.getPassword());
+            if (user.getImage() != null) {
+                ps.setBytes(3, user.getImage());
+            } else {
+                ps.setNull(3, Types.BLOB);
+            }
+            ps.setTimestamp(4, timestamp);
+            ps.setString(5, user.getEmail());
+
+            int affectedRows = ps.executeUpdate();
+            return affectedRows > 0;
+
+        } catch (SQLException e) {
+            System.err.println("Error updating user: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

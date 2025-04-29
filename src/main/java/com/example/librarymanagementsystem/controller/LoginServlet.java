@@ -12,6 +12,12 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // For log out
+        String logout = request.getParameter("logout");
+        if (logout != null && logout.equals("true")) {
+            request.setAttribute("successMessage", "You have been logged out successfully.");
+        }
+
         // Check if user is already logged in
         HttpSession existingSession = request.getSession(false);
         if (existingSession != null && existingSession.getAttribute("user") != null) {

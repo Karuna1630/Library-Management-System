@@ -8,9 +8,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Logging Out - UniShelf</title>
+    <meta http-equiv="refresh" content="2;url=<%= request.getContextPath() %>/LoginServlet?logout=true">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/Logout.css">
 </head>
 <body>
-
+<div class="logout-message">
+    <p>Logging you out...</p>
+</div>
 </body>
 </html>
