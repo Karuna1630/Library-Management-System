@@ -10,20 +10,35 @@ import java.io.IOException;
 
 @WebServlet(name = "LoginServlet", value = "/LoginServlet")
 public class LoginServlet extends HttpServlet {
+    private static final String REMEMBER_ME_COOKIE = "rememberMe";
+    private static final int COOKIE_AGE = 30 * 24 * 60 * 60; // 30 days in seconds
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // For log out
-        String logout = request.getParameter("logout");
-        if (logout != null && logout.equals("true")) {
-            request.setAttribute("successMessage", "You have been logged out successfully.");
-        }
-
         // Check if user is already logged in
         HttpSession existingSession = request.getSession(false);
         if (existingSession != null && existingSession.getAttribute("user") != null) {
             User user = (User) existingSession.getAttribute("user");
             redirectBasedOnRole(user, request, response);
             return;
+        }
+
+        // Check for remember me cookie
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (REMEMBER_ME_COOKIE.equals(cookie.getName())) {
+                    String email = cookie.getValue();
+                    User rememberedUser = AuthService.validateRememberMeToken(email);
+                    if (rememberedUser != null) {
+                        // Create new session
+                        HttpSession newSession = request.getSession(true);
+                        newSession.setAttribute("user", rememberedUser);
+                        redirectBasedOnRole(rememberedUser, request, response);
+                        return;
+                    }
+                }
+            }
         }
 
         // Check for success message from registration
@@ -39,6 +54,7 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("user_email");
         String password = request.getParameter("password");
+        boolean rememberMe = "on".equals(request.getParameter("rememberMe"));
 
         // Validate inputs
         if (email == null || email.trim().isEmpty() || password == null || password.trim().isEmpty()) {
@@ -59,19 +75,16 @@ public class LoginServlet extends HttpServlet {
 
             // Create new session
             HttpSession newSession = request.getSession(true);
-
-            // Set session attributes
             newSession.setAttribute("user", authenticatedUser);
-            newSession.setAttribute("userEmail", authenticatedUser.getEmail());
-            newSession.setAttribute("userRole", authenticatedUser.getRole().toString());
 
-            // Set session timeout (30 minutes)
-            newSession.setMaxInactiveInterval(30 * 60);
-
-            // Store image in session if exists
-            if (authenticatedUser.getImage() != null) {
-                String base64Image = java.util.Base64.getEncoder().encodeToString(authenticatedUser.getImage());
-                newSession.setAttribute("base64Image", base64Image);
+            // Set "Remember Me" cookie if requested
+            if (rememberMe) {
+                Cookie cookie = new Cookie(REMEMBER_ME_COOKIE, authenticatedUser.getEmail());
+                cookie.setMaxAge(COOKIE_AGE);
+                cookie.setPath("/");
+                cookie.setHttpOnly(true);
+                response.addCookie(cookie);
+                System.out.println("DEBUG: Cookie set for: " + authenticatedUser.getEmail());
             }
 
             redirectBasedOnRole(authenticatedUser, request, response);
@@ -89,4 +102,3 @@ public class LoginServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/index.jsp");
         }
     }
-}
