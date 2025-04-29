@@ -8,36 +8,27 @@ import java.io.IOException;
 
 @WebServlet(name = "LogoutServlet", value = "/LogoutServlet")
 public class LogoutServlet extends HttpServlet {
+    private static final String REMEMBER_ME_COOKIE = "rememberMe";
+
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        // Invalidate the session and clear all attributes
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Invalidate session
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();
         }
 
-        // Clear any authentication cookies
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("JSESSIONID") ||
-                        cookie.getName().equals("rememberMe")) {
-                    cookie.setMaxAge(0);
-                    cookie.setValue("");
-                    cookie.setPath("/");
-                    response.addCookie(cookie);
-                }
-            }
-        }
+        // Clear remember me cookie
+        Cookie cookie = new Cookie(REMEMBER_ME_COOKIE, "");
+        cookie.setMaxAge(0);
+        cookie.setPath("/");
+        response.addCookie(cookie);
 
-        // Redirect to login page with success message
-        response.sendRedirect(request.getContextPath() + "/LoginServlet?logout=true");
+        response.sendRedirect(request.getContextPath() + "/IndexServlet");
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
 }
