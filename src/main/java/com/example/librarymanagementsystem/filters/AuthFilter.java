@@ -21,7 +21,7 @@ public class AuthFilter implements Filter {
         HttpSession session = httpRequest.getSession(false);
         String requestURI = httpRequest.getRequestURI();
         String contextPath = httpRequest.getContextPath();
-
+        assert session != null;
         // Publicly accessible paths
         if (requestURI.startsWith(contextPath + "/assets/") ||
                 requestURI.equals(contextPath + "/") ||
@@ -29,8 +29,11 @@ public class AuthFilter implements Filter {
                 requestURI.contains("/RegisterServlet") ||
                 requestURI.contains("/login.jsp") ||
                 requestURI.contains("/register.jsp") ||
-                requestURI.contains("/AccessDeniedServlet")) {
+                requestURI.contains("/AccessDeniedServlet")||
+                requestURI.contains("/index.jsp")||
+                requestURI.contains("/IndexServlet")) {
             chain.doFilter(request, response);
+            System.out.println("These are publlic pages");
             return;
         }
 

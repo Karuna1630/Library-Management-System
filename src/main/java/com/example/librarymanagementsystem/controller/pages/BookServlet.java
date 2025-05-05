@@ -1,4 +1,4 @@
-package com.example.librarymanagementsystem.controller;
+package com.example.librarymanagementsystem.controller.pages;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;

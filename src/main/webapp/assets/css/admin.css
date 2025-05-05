@@ -1,4 +1,3 @@
-
 /* Admin Layout */
 .admin-container {
     display: flex;
@@ -269,12 +268,14 @@
 }
 
 /* Tables */
-.books-table, .borrow-table {
+.books-table, .borrow-table, .users-table {
     width: 100%;
     border-collapse: collapse;
 }
 
-.books-table th, .borrow-table th {
+.books-table th,
+.borrow-table th,
+.users-table th {
     background-color: #f1f5f9;
     padding: 1rem;
     text-align: left;
@@ -283,35 +284,119 @@
     font-weight: 500;
 }
 
-.books-table td, .borrow-table td {
+.books-table td,
+.borrow-table td,
+.users-table td {
     padding: 1rem;
     border-bottom: 1px solid #e2e8f0;
     font-size: 0.9375rem;
+    vertical-align: middle;
+}
+
+/* User Table Specific Styles */
+.users-table {
+    margin-top: 1rem;
+}
+
+.users-table th:first-child,
+.users-table td:first-child {
+    width: 40px;
+    padding-right: 0;
+}
+
+.users-table th:last-child,
+.users-table td:last-child {
+    width: 200px;
+}
+
+.user-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-img-small {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-initial-small {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #4299e1;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+}
+
+.status-active {
+    background-color: #ebf8ff;
+    color: #3182ce;
+}
+
+.status-suspended {
+    background-color: #fff5f5;
+    color: #e53e3e;
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
 }
 
 .btn-icon {
-    background: none;
-    border: none;
-    color: #64748b;
-    cursor: pointer;
-    padding: 0.5rem;
+    padding: 6px 12px;
     border-radius: 4px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
     transition: all 0.2s ease;
+    border: none;
 }
 
-.btn-icon:hover {
-    background-color: #f1f5f9;
-    color: #4361ee;
+.view-btn {
+    background-color: #edf2f7;
+    color: #4a5568;
 }
 
-.edit-btn {
-    color: #3b82f6;
+.view-btn:hover {
+    background-color: #e2e8f0;
+}
+
+.suspend-btn {
+    background-color: #fff5f5;
+    color: #e53e3e;
+}
+
+.suspend-btn:hover {
+    background-color: #fed7d7;
 }
 
 .delete-btn {
+    background-color: #fee2e2;
     color: #ef4444;
 }
 
+.delete-btn:hover {
+    background-color: #fecaca;
+}
+
+/* Status Badges */
 .status-borrowed {
     background-color: #dbeafe;
     color: #1d4ed8;
@@ -330,19 +415,13 @@
     font-weight: 500;
 }
 
-.return-btn {
-    background-color: #10b981;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    font-size: 0.875rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.return-btn:hover {
-    background-color: #0d9b6c;
+.status-returned {
+    background-color: #d1fae5;
+    color: #065f46;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8125rem;
+    font-weight: 500;
 }
 
 /* Responsive Styles */
@@ -388,5 +467,271 @@
 
     .search-box {
         width: 100%;
+    }
+
+    .actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .btn-icon {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* User Profile View Styles */
+    .user-profile-section {
+        background: white;
+        border-radius: 10px;
+        padding: 2rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    .profile-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .profile-large {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #4361ee;
+        margin-bottom: 1rem;
+    }
+
+    .profile-initial-large {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background-color: #4361ee;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        font-weight: bold;
+        margin: 0 auto 1rem;
+        border: 3px solid #4895ef;
+    }
+
+    .role-badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        margin-top: 0.5rem;
+    }
+
+    .role-badge.admin {
+        background-color: #dbeafe;
+        color: #1d4ed8;
+    }
+
+    .role-badge.user {
+        background-color: #d1fae5;
+        color: #065f46;
+    }
+
+    .role-badge.instructor {
+        background-color: #fef3c7;
+        color: #92400e;
+    }
+
+    .detail-card {
+        background: #f8fafc;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .detail-card h3 {
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+        color: #1e293b;
+    }
+
+    .detail-row {
+        display: flex;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .detail-label {
+        font-weight: 500;
+        color: #64748b;
+        width: 150px;
+    }
+
+    .detail-value {
+        flex: 1;
+        color: #1e293b;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: flex-end;
+    }
+    /* Toast Notification Styles */
+    .toast-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+    }
+
+    .toast {
+        padding: 15px 25px;
+        border-radius: 4px;
+        color: white;
+        margin-bottom: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-width: 250px;
+        transform: translateX(100%);
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+
+    .toast.show {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    .toast.success {
+        background-color: #28a745;
+    }
+
+    .toast.error {
+        background-color: #dc3545;
+    }
+
+    .toast i {
+        margin-right: 10px;
+    }
+
+    .toast-close {
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+        margin-left: 15px;
+        font-size: 16px;
+    }
+
+    /* Book Management Image css */
+    .image-preview {
+        margin-top: 10px;
+        border: 1px solid #ddd;
+        padding: 5px;
+        border-radius: 4px;
+        text-align: center;
+    }
+
+    #previewImage {
+        max-height: 200px;
+        max-width: 100%;
+    }
+
+
+    .book-cover-small {
+        width: 50px !important;
+        height: 70px !important;
+        object-fit: cover; /* Crops to fill, preserving aspect ratio */
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: block; /* Avoids inline spacing issues */
+        max-width: 50px; /* Prevents stretching */
+        max-height: 70px;
+
+    }
+
+    .book-cover-container-admin {
+        width: 50px;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden; /* Prevent content from overflowing */
+    }
+
+    .book-cover-placeholder {
+        width: 50px;
+        height: 70px;
+        background-color: #f0f0f0;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #888;
+        font-size: 20px;
+    }
+
+    .books-table td:first-child {
+        width: 70px;
+        text-align: center;
+    }
+
+    /* Add this section for the book detail view */
+    .book-cover-detail {
+        max-width: 200px;
+        max-height: 300px;
+        object-fit: contain;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Fix for BookCoverServlet images in all contexts */
+    img[src*="BookCoverServlet"] {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Specific override for the small book covers in tables */
+    .book-cover-container-admin img[src*="BookCoverServlet"] {
+        width: 50px;
+        height: 70px;
+        max-width: 50px;
+        max-height: 70px;
+        object-fit: cover;
+    }
+    .alert {
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 4px;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        max-width: 300px;
+        animation: slideIn 0.5s, fadeOut 0.5s 2.5s forwards;
+    }
+
+    .alert-success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+
+    .alert-error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+
+    @keyframes slideIn {
+        from { transform: translateX(100%); }
+        to { transform: translateX(0); }
+    }
+
+    @keyframes fadeOut {
+        from { opacity: 1; }
+        to { opacity: 0; }
     }
 }

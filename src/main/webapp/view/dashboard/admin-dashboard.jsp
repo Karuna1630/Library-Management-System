@@ -1,36 +1,37 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: USER-PC
-  Date: 4/17/2025
-  Time: 10:53 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.example.librarymanagementsystem.model.User" %>
-<html>
+<%@ page import="java.util.List" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Base64" %>
+<%@ page import="com.example.librarymanagementsystem.model.Book" %>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <title>Admin Dashboard | UniShelf</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/navbar.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/index.css">
-    <script src="${pageContext.request.contextPath}/assets/js/admin.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<%@include file="../components/navbar.jsp" %>
+<%@ include file="../components/navbar.jsp" %>
+
+<%
+    // Get the current logged-in admin user once at the top
+    User currentAdmin = (User) session.getAttribute("user");
+    List<User> userList = (List<User>) request.getAttribute("users");
+%>
 
 <div class="admin-container">
-    <!-- Sidebar Navigation -->
     <aside class="admin-sidebar">
         <div class="admin-profile">
             <% if (session.getAttribute("base64Image") != null) { %>
-            <img src="data:image/jpeg;base64,<%= session.getAttribute("base64Image") %>"
-                 alt="Admin Profile" class="profile-img">
+            <img src="data:image/jpeg;base64,<%= session.getAttribute("base64Image") %>" alt="Admin Profile" class="profile-img">
             <% } else { %>
-            <div class="profile-initial"><%= user.getFullName().charAt(0) %></div>
+            <div class="profile-initial"><%= currentAdmin.getFullName().charAt(0) %></div>
             <% } %>
-            <h3><%= user.getFullName() %></h3>
+            <h3><%= currentAdmin.getFullName() %></h3>
             <p>Administrator</p>
         </div>
 
@@ -40,12 +41,10 @@
                 <li><a href="#books"><i class="fas fa-book"></i> Manage Books</a></li>
                 <li><a href="#borrowings"><i class="fas fa-exchange-alt"></i> Borrow Records</a></li>
                 <li><a href="#users"><i class="fas fa-users"></i> Manage Users</a></li>
-                <li><a href="#categories"><i class="fas fa-tags"></i> Book Categories</a></li>
             </ul>
         </nav>
     </aside>
 
-    <!-- Main Content Area -->
     <main class="admin-main">
         <div class="admin-header">
             <h1>Admin Dashboard</h1>
@@ -99,44 +98,52 @@
             </div>
 
             <div class="book-management">
-                <!-- Book Add/Edit Form (Initially Hidden) -->
                 <div class="book-form-container">
-                    <form id="bookForm" class="book-form">
-                        <input type="hidden" id="bookId">
+                    <form id="bookForm" action="${pageContext.request.contextPath}/BookServlet" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="action" value="addBook">
+                        <input type="hidden" id="bookId" name="bookId">
                         <div class="form-group">
                             <label for="bookTitle">Title</label>
-                            <input type="text" id="bookTitle" required>
+                            <input type="text" id="bookTitle" name="title" required>
                         </div>
                         <div class="form-group">
                             <label for="bookAuthor">Author</label>
-                            <input type="text" id="bookAuthor" required>
+                            <input type="text" id="bookAuthor" name="author" required>
                         </div>
                         <div class="form-group">
                             <label for="bookYear">Publication Year</label>
-                            <input type="date" id="bookYear" required>
+                            <input type="date" id="bookYear" name="publicationYear" required>
                         </div>
                         <div class="form-group">
                             <label for="bookCategory">Category</label>
-                            <select id="bookCategory" required>
+                            <select id="bookCategory" name="category" required>
                                 <option value="">Select Category</option>
-                                <option value="1">Computer Science</option>
-                                <option value="2">Engineering</option>
-                                <option value="3">Mathematics</option>
-                                <option value="4">Literature</option>
+                                <option value="Computer Science">Computer Science</option>
+                                <option value="Engineering">Engineering</option>
+                                <option value="Mathematics">Mathematics</option>
+                                <option value="Literature">Literature</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="bookStock">Stock Quantity</label>
-                            <input type="number" id="bookStock" min="1" value="1" required>
+                            <input type="number" id="bookStock" name="stock" min="1" value="1" required>
                         </div>
-                        <div class="form-actions">
-                            <button type="submit" class="btn btn-primary">Save Book</button>
-                            <button type="button" class="btn btn-outline" id="cancelBookBtn">Cancel</button>
+
+                        <div class="form-group">
+                            <label for="bookImage">Book Cover Image</label>
+                            <input type="file" id="bookImage" name="image" accept="image/*">
+                            <div class="image-preview" id="imagePreview" style="display: none;">
+                                <img id="previewImage" src="#" alt="Preview" style="max-width: 200px; max-height: 200px; margin-top: 10px;">
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Save Book</button>
+                                <button type="button" class="btn btn-outline" id="cancelBookBtn">Cancel</button>
+                            </div>
                         </div>
                     </form>
                 </div>
 
-                <!-- Books Table -->
                 <div class="books-table-container">
                     <div class="table-actions">
                         <div class="search-box">
@@ -154,6 +161,7 @@
                     <table class="books-table">
                         <thead>
                         <tr>
+                            <th>Cover</th>
                             <th>ID</th>
                             <th>Title</th>
                             <th>Author</th>
@@ -164,31 +172,44 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <%
+                            List<Book> books = (List<Book>) request.getAttribute("books");
+                            if (books != null) {
+                                for (Book book : books) {
+                        %>
                         <tr>
-                            <td>101</td>
-                            <td>Introduction to Algorithms</td>
-                            <td>Thomas H. Cormen</td>
-                            <td>2009</td>
-                            <td>Computer Science</td>
-                            <td>5</td>
                             <td>
-                                <button class="btn-icon edit-btn"><i class="fas fa-edit"></i></button>
-                                <button class="btn-icon delete-btn"><i class="fas fa-trash"></i></button>
+                                <div class="book-cover-container-admin">
+                                    <% if (book.getImage() != null && book.getImage().length > 0) { %>
+                                    <img src="${pageContext.request.contextPath}/BookCoverServlet?id=<%= book.getBookId() %>"
+                                         alt="Book Cover"
+                                         class="book-cover-small">
+                                    <% } else { %>
+                                    <div class="book-cover-placeholder">
+                                        <i class="fas fa-book"></i>
+                                    </div>
+                                    <% } %>
+                                </div>
+                            </td>
+                            <td><%= book.getBookId() %></td>
+                            <td><%= book.getTitle() %></td>
+                            <td><%= book.getAuthor() %></td>
+                            <td><%= book.getPublicationYear() %></td>
+                            <td><%= book.getCategory() %></td>
+                            <td><%= book.getStock() %></td>
+                            <td>
+                                <button class="btn-icon edit-btn" onclick="editBook(<%= book.getBookId() %>)">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-icon delete-btn" onclick="deleteBook(<%= book.getBookId() %>)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
                             </td>
                         </tr>
-                        <tr>
-                            <td>102</td>
-                            <td>Clean Code</td>
-                            <td>Robert C. Martin</td>
-                            <td>2008</td>
-                            <td>Programming</td>
-                            <td>3</td>
-                            <td>
-                                <button class="btn-icon edit-btn"><i class="fas fa-edit"></i></button>
-                                <button class="btn-icon delete-btn"><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>
-                        <!-- More rows would be dynamically populated -->
+                        <%
+                                }
+                            }
+                        %>
                         </tbody>
                     </table>
                 </div>
@@ -245,7 +266,66 @@
                         <button class="btn-icon return-btn"><i class="fas fa-check"></i> Mark Returned</button>
                     </td>
                 </tr>
-                <!-- More rows would be dynamically populated -->
+                </tbody>
+            </table>
+        </section>
+
+        <!-- User Management Section -->
+        <section id="users" class="admin-section">
+            <div class="section-header">
+                <h2><i class="fas fa-users"></i> Manage Users</h2>
+                <div class="search-box">
+                    <input type="text" id="userSearch" placeholder="Search users...">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+
+            <table class="users-table">
+                <thead>
+                <tr>
+                    <th></th> <!-- Icon column -->
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Joined</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% if (userList != null) {
+                    for (User listUser : userList) { %>
+                <tr>
+                    <td class="user-icon">
+                        <% if (listUser.getImage() != null) {
+                            String userImage = Base64.getEncoder().encodeToString(listUser.getImage());
+                        %>
+                        <img src="data:image/jpeg;base64,<%= userImage %>"
+                             alt="User Profile"
+                             class="profile-img-small">
+                        <% } else { %>
+                        <div class="profile-initial-small"><%= listUser.getFullName().charAt(0) %></div>
+                        <% } %>
+                    </td>
+                    <td><%= listUser.getFullName() %></td>
+                    <td><span class="role-badge <%= listUser.getRole().name().toLowerCase() %>">
+                    <%= listUser.getRole() %>
+                </span></td>
+                    <td><span class="status-active">Active</span></td>
+                    <td><%= new java.text.SimpleDateFormat("MMM d, yyyy").format(listUser.getCreated_at()) %></td>
+                    <td class="actions">
+                        <a href="<%= request.getContextPath() %>/AdminServlet?action=viewUser&userId=<%= listUser.getId() %>"
+                           class="btn-icon view-btn">
+                            <i class="fas fa-eye"></i> View
+                        </a>
+                        <% if (listUser.getRole() != User.Role.admin) { %>
+                        <button class="btn-icon delete-btn" onclick="deleteUser(<%= listUser.getId() %>)">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                        <% } %>
+                    </td>
+                </tr>
+                <%   }
+                } %>
                 </tbody>
             </table>
         </section>
@@ -253,5 +333,32 @@
 </div>
 
 <script src="${pageContext.request.contextPath}/assets/js/admin.js"></script>
+<!-- Add this script at the bottom of the page, before </body> -->
+<script>
+    function deleteUser(userId) {
+        if (confirm('Are you sure you want to delete this user?')) {
+            fetch('<%= request.getContextPath() %>/AdminServlet', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'action=deleteUser&userId=' + userId
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    }
+                    throw new Error('Network response was not ok');
+                })
+                .then(message => {
+                    alert(message);
+                    window.location.reload(); // Refresh the page to see changes
+                })
+                .catch(error => {
+                    alert('Error deleting user: ' + error.message);
+                });
+        }
+    }
+</script>
 </body>
 </html>

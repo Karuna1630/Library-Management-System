@@ -1,7 +1,7 @@
-package com.example.librarymanagementsystem.controller;
+package com.example.librarymanagementsystem.controller.pages;
 
-import com.example.librarymanagementsystem.model.User;
 import com.example.librarymanagementsystem.dao.UserDAO;
+import com.example.librarymanagementsystem.model.User;
 import com.example.librarymanagementsystem.utils.PasswordHashUtil;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;

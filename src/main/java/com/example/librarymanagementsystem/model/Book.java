@@ -1,22 +1,37 @@
 package com.example.librarymanagementsystem.model;
 
+import java.util.Date;
+
 public class Book {
     private int bookId;
     private String title;
     private String author;
-    private int publicationYear;
+    private Date publicationYear;
     private String category;
     private int stock;
+    private byte[] image;
 
+    public Book(String title, String author, Date publicationYear, String category, int stock, byte[] image) {
+        this.title = title;
+        this.author = author;
+        this.publicationYear = publicationYear;
+        this.category = category;
+        this.stock = stock;
+        this.image = image;
+    }
 
-
-    public Book(int bookId, String title, String author, int publicationYear, String category, int stock) {
+    public Book(int bookId, String title, String author, Date publicationYear, String category, int stock, byte[] image) {
         this.bookId = bookId;
         this.title = title;
         this.author = author;
         this.publicationYear = publicationYear;
         this.category = category;
         this.stock = stock;
+        this.image = image;
+    }
+
+    public Book() {
+
     }
 
     // Getters and Setters for each field
@@ -44,11 +59,11 @@ public class Book {
         this.author = author;
     }
 
-    public int getPublicationYear() {
+    public Date getPublicationYear() {
         return publicationYear;
     }
 
-    public void setPublicationYear(int publicationYear) {
+    public void setPublicationYear(Date publicationYear) {
         this.publicationYear = publicationYear;
     }
 
@@ -68,10 +83,10 @@ public class Book {
         this.stock = stock;
     }
 
-    // Override the toString method to display all fields, including stock
-    @Override
-    public String toString() {
-        return "Book [bookId=" + bookId + ", title=" + title + ", author=" + author +
-                ", publicationYear=" + publicationYear + ", category=" + category + ", stock=" + stock + "]";
+    public byte[] getImage() {
+        return image;
+    }
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 }
