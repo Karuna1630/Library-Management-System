@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.example.librarymanagementsystem.model.Book" %>
+<%@ page import="java.util.List" %>
 <html>
 <head>
     <title>Book Collection | UniShelf</title>
@@ -10,11 +12,41 @@
 <body>
 <%@include file="../components/navbar.jsp" %>
 
+<!-- Toast Notifications -->
+<%
+    String errorMessage = (String) session.getAttribute("errorMessage");
+    String successMessage = (String) session.getAttribute("successMessage");
+    if (successMessage != null) {
+        session.removeAttribute("successMessage");
+%>
+<div class="toast-container">
+    <div class="toast success show">
+        <i class="fas fa-check-circle"></i>
+        <%= successMessage %>
+        <button class="toast-close">×</button>
+    </div>
+</div>
+<%
+    }
+    if (errorMessage != null) {
+        session.removeAttribute("errorMessage");
+%>
+<div class="toast-container">
+    <div class="toast error show">
+        <i class="fas fa-exclamation-circle"></i>
+        <%= errorMessage %>
+        <button class="toast-close">×</button>
+    </div>
+</div>
+<%
+    }
+%>
+
 <!-- Hero Section -->
 <section class="books-hero">
     <div class="container">
         <h1>Our Book Collection</h1>
-        <p>Browse and borrow from our extensive academic library</p>
+        <p>Browse and reserve from our extensive academic library</p>
     </div>
 </section>
 
@@ -35,7 +67,7 @@
         <select class="filter-select">
             <option>All Availability</option>
             <option>Available Now</option>
-            <option>Currently Borrowed</option>
+            <option>Currently Reserved</option>
         </select>
     </div>
 </section>
@@ -43,88 +75,72 @@
 <!-- Books Grid -->
 <section class="books-grid">
     <div class="grid-container container">
-        <!-- Book 1 -->
+        <%
+            List<Book> books = (List<Book>) request.getAttribute("books");
+            if (books != null && !books.isEmpty()) {
+                for (Book book : books) {
+        %>
         <div class="book-card">
             <div class="book-cover">
+                <% if (book.getImage() != null && book.getImage().length > 0) { %>
+                <img src="${pageContext.request.contextPath}/BookCoverServlet?id=<%= book.getBookId() %>"
+                     alt="Book Cover"
+                     style="width: 100%; height: 200px; object-fit: cover;">
+                <% } else { %>
                 <i class="fas fa-book"></i>
-                <span class="book-status status-available">Available</span>
+                <% } %>
+                <span class="book-status <%= book.getStock() > 0 ? "status-available" : "status-borrowed" %>">
+                    <%= book.getStock() > 0 ? "Available" : "Reserved" %>
+                </span>
             </div>
             <div class="book-info">
-                <h3 class="book-title">Introduction to Algorithms</h3>
-                <p class="book-author">By Thomas H. Cormen</p>
+                <h3 class="book-title"><%= book.getTitle() %></h3>
+                <p class="book-author">By <%= book.getAuthor() %></p>
                 <div class="book-meta">
-                    <span><i class="fas fa-bookmark"></i> Computer Science</span>
-                    <span><i class="fas fa-calendar-alt"></i> 2022 Edition</span>
+                    <span><i class="fas fa-bookmark"></i> <%= book.getCategory() %></span>
+                    <span><i class="fas fa-calendar-alt"></i> <%= book.getPublicationYear() != null ? book.getPublicationYear() : "N/A" %></span>
                 </div>
                 <div class="book-actions">
-                    <button class="btn btn-borrow">Borrow Book</button>
-                    <button class="btn btn-details">Details</button>
+                    <% if (book.getStock() > 0) { %>
+                    <form action="${pageContext.request.contextPath}/BorrowServlet" method="POST">
+                        <input type="hidden" name="bookId" value="<%= book.getBookId() %>">
+                        <button type="submit" class="btn btn-borrow">Borrow Book</button>
+                    </form>
+                    <% } else { %>
+                    <form action="${pageContext.request.contextPath}/ReserveServlet" method="POST">
+                        <input type="hidden" name="bookId" value="<%= book.getBookId() %>">
+                        <button type="submit" class="btn btn-borrow">Reserve Book</button>
+                    </form>
+                    <% } %>
                 </div>
             </div>
         </div>
-
-        <!-- Book 2 -->
-        <div class="book-card">
-            <div class="book-cover">
-                <i class="fas fa-book"></i>
-                <span class="book-status status-borrowed">Due 05/30</span>
-            </div>
-            <div class="book-info">
-                <h3 class="book-title">Database System Concepts</h3>
-                <p class="book-author">By Abraham Silberschatz</p>
-                <div class="book-meta">
-                    <span><i class="fas fa-bookmark"></i> Computer Science</span>
-                    <span><i class="fas fa-calendar-alt"></i> 7th Edition</span>
-                </div>
-                <div class="book-actions">
-                    <button class="btn btn-borrow" disabled>Borrowed</button>
-                    <button class="btn btn-details">Details</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Book 3 -->
-        <div class="book-card">
-            <div class="book-cover">
-                <i class="fas fa-book"></i>
-                <span class="book-status status-available">Available</span>
-            </div>
-            <div class="book-info">
-                <h3 class="book-title">Clean Code</h3>
-                <p class="book-author">By Robert C. Martin</p>
-                <div class="book-meta">
-                    <span><i class="fas fa-bookmark"></i> Software Engineering</span>
-                    <span><i class="fas fa-calendar-alt"></i> 1st Edition</span>
-                </div>
-                <div class="book-actions">
-                    <button class="btn btn-borrow">Borrow Book</button>
-                    <button class="btn btn-details">Details</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Book 4 -->
-        <div class="book-card">
-            <div class="book-cover">
-                <i class="fas fa-book"></i>
-                <span class="book-status status-available">Available</span>
-            </div>
-            <div class="book-info">
-                <h3 class="book-title">The Pragmatic Programmer</h3>
-                <p class="book-author">By Andrew Hunt</p>
-                <div class="book-meta">
-                    <span><i class="fas fa-bookmark"></i> Programming</span>
-                    <span><i class="fas fa-calendar-alt"></i> 2nd Edition</span>
-                </div>
-                <div class="book-actions">
-                    <button class="btn btn-borrow">Borrow Book</button>
-                    <button class="btn btn-details">Details</button>
-                </div>
-            </div>
-        </div>
+        <%
+            }
+        } else {
+        %>
+        <p>No books available at the moment.</p>
+        <%
+            }
+        %>
     </div>
 </section>
 
 <%@include file="../components/footer.jsp" %>
+
+<script>
+    // Close toast notifications
+    document.querySelectorAll('.toast-close').forEach(button => {
+        button.addEventListener('click', () => {
+            button.parentElement.classList.remove('show');
+        });
+    });
+    // Auto-hide toasts after 5 seconds
+    setTimeout(() => {
+        document.querySelectorAll('.toast.show').forEach(toast => {
+            toast.classList.remove('show');
+        });
+    }, 5000);
+</script>
 </body>
 </html>
