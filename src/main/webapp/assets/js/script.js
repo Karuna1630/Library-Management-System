@@ -123,6 +123,40 @@ function previewImage() {
 
         reader.readAsDataURL(fileInput.files[0]);
     }
+
+    document.getElementById('profileImage').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            // Validate image type
+            if (!file.type.startsWith('image/')) {
+                alert('Please select an image file');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imgContainer = document.querySelector('.profile-image-section');
+                if (imgContainer) {
+                    // Remove initial if exists
+                    const initialElement = imgContainer.querySelector('.profile-initial-large');
+                    if (initialElement) {
+                        initialElement.remove();
+                    }
+
+                    // Create or update image element
+                    let imgElement = imgContainer.querySelector('.profile-large-image');
+                    if (!imgElement) {
+                        imgElement = document.createElement('img');
+                        imgElement.className = 'profile-large-image';
+                        imgElement.alt = 'Profile Preview';
+                        imgContainer.insertBefore(imgElement, imgContainer.firstChild);
+                    }
+                    imgElement.src = e.target.result;
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    });
 }
 
 /**

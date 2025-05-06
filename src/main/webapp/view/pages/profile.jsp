@@ -42,11 +42,14 @@
     <div class="profile-content">
         <form action="<%= request.getContextPath() %>/ProfileServlet" method="post" enctype="multipart/form-data" class="profile-form">
             <div class="profile-image-section">
-                <% if (session.getAttribute("base64Image") != null) { %>
-                <img src="data:image/jpeg;base64,<%= session.getAttribute("base64Image") %>"
+                <%
+                    String base64Image = (String) session.getAttribute("base64Image");
+                    if (base64Image != null && !base64Image.isEmpty()) {
+                %>
+                <img src="data:image/jpeg;base64,<%= base64Image %>"
                      alt="Profile"
                      class="profile-large-image"
-                     onerror="this.src='<%= request.getContextPath() %>/assets/images/default-profile.svg'">
+                     onerror="this.onerror=null;this.src='<%= request.getContextPath() %>/assets/images/default-profile.svg'">
                 <% } else { %>
                 <div class="profile-initial-large"><%= profileUser.getFullName().charAt(0) %></div>
                 <% } %>

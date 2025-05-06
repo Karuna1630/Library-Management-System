@@ -1,23 +1,15 @@
 package com.example.librarymanagementsystem.model;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 public class Reservation {
     private int reservationId;
-    private int bookId;
     private int userId;
-    private Timestamp reservationDate;
+    private int bookId;
+    private Date reservationDate;
     private String status;
-    private String reservedUntil;
-
-    public Reservation(int reservationId, int bookId, int userId, Timestamp reservationDate, String status, String reservedUntil) {
-        this.reservationId = reservationId;
-        this.bookId = bookId;
-        this.userId = userId;
-        this.reservationDate = reservationDate;
-        this.status = status;
-        this.reservedUntil = reservedUntil;
-    }
+    private Date reservedUntil;
+    private Book book;
 
     // Getters and Setters
     public int getReservationId() {
@@ -28,14 +20,6 @@ public class Reservation {
         this.reservationId = reservationId;
     }
 
-    public int getBookId() {
-        return bookId;
-    }
-
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
-    }
-
     public int getUserId() {
         return userId;
     }
@@ -44,11 +28,19 @@ public class Reservation {
         this.userId = userId;
     }
 
-    public Timestamp getReservationDate() {
+    public int getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
+    }
+
+    public Date getReservationDate() {
         return reservationDate;
     }
 
-    public void setReservationDate(Timestamp reservationDate) {
+    public void setReservationDate(Date reservationDate) {
         this.reservationDate = reservationDate;
     }
 
@@ -60,17 +52,19 @@ public class Reservation {
         this.status = status;
     }
 
-    public String getReservedUntil() {
+    public Date getReservedUntil() {
         return reservedUntil;
     }
 
-    public void setReservedUntil(String reservedUntil) {
+    public void setReservedUntil(Date reservedUntil) {
         this.reservedUntil = reservedUntil;
     }
 
-    @Override
-    public String toString() {
-        return "Reservation [reservationId=" + reservationId + ", bookId=" + bookId + ", userId=" + userId +
-                ", status=" + status + ", reservedUntil=" + reservedUntil + "]";
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
     }
 }

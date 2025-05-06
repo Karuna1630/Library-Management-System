@@ -1,4 +1,4 @@
-package com.example.librarymanagementsystem.controller.admin;
+package com.example.librarymanagementsystem.controller.Admin;
 
 import com.example.librarymanagementsystem.dao.BookDAO;
 import com.example.librarymanagementsystem.model.Book;

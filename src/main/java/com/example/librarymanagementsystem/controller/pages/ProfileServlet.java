@@ -1,7 +1,7 @@
 package com.example.librarymanagementsystem.controller.pages;
 
-import com.example.librarymanagementsystem.dao.UserDAO;
 import com.example.librarymanagementsystem.model.User;
+import com.example.librarymanagementsystem.dao.UserDAO;
 import com.example.librarymanagementsystem.utils.PasswordHashUtil;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -23,6 +23,13 @@ public class ProfileServlet extends HttpServlet {
         if (session == null || session.getAttribute("user") == null) {
             response.sendRedirect(request.getContextPath() + "/LoginServlet");
             return;
+        }
+
+        // Ensure image is loaded in session if it exists in user object
+        User user = (User) session.getAttribute("user");
+        if (user.getImage() != null && session.getAttribute("base64Image") == null) {
+            String base64Image = Base64.getEncoder().encodeToString(user.getImage());
+            session.setAttribute("base64Image", base64Image);
         }
 
         request.getRequestDispatcher("/view/pages/profile.jsp").forward(request, response);
@@ -90,12 +97,16 @@ public class ProfileServlet extends HttpServlet {
             // Save to database
             boolean updated = UserDAO.updateUser(currentUser);
 
+            // In the success update section:
             if (updated) {
                 // Update session
                 session.setAttribute("user", currentUser);
                 if (imageBytes != null) {
                     String base64Image = Base64.getEncoder().encodeToString(imageBytes);
                     session.setAttribute("base64Image", base64Image);
+                } else if (currentUser.getImage() == null) {
+                    // Clear the image if it was removed
+                    session.removeAttribute("base64Image");
                 }
                 request.setAttribute("successMessage", "Profile updated successfully!");
             } else {

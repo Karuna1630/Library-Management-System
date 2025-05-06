@@ -19,7 +19,7 @@
         <div class="navbar-menu">
             <ul class="nav-links">
                 <li><a href="<%= request.getContextPath() %>/IndexServlet" class="nav-link">Home</a></li>
-                <li><a href="<%= request.getContextPath() %>/BookServlet" class="nav-link">Books</a></li>
+                <li><a href="<%= request.getContextPath() %>/BookListServlet" class="nav-link">Books</a></li>
                 <li><a href="<%= request.getContextPath() %>/AboutUsServlet" class="nav-link">About Us</a></li>
                 <li><a href="<%= request.getContextPath() %>/ContactServlet" class="nav-link">Contact Us</a></li>
 
@@ -58,7 +58,7 @@
             </div>
             <% } %>
 
-            <a href="<%= request.getContextPath() %>/view/auth/reserve.jsp" class="cart-icon">
+            <a href="<%= request.getContextPath() %>/UserBooksServlet" class="cart-icon">
                 <i class="fas fa-store"></i>
             </a>
         </div>
