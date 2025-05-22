@@ -19,38 +19,48 @@ import java.util.Base64;
 public class ProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Check if user is logged in
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
+            // Redirect to login page if user is not authenticated
             response.sendRedirect(request.getContextPath() + "/LoginServlet");
             return;
         }
 
-        // Ensure image is loaded in session if it exists in user object
+        // Get the authenticated user from session
         User user = (User) session.getAttribute("user");
+
+        // Convert user image to Base64 for display if not already in session
         if (user.getImage() != null && session.getAttribute("base64Image") == null) {
             String base64Image = Base64.getEncoder().encodeToString(user.getImage());
             session.setAttribute("base64Image", base64Image);
         }
 
+        // Forward to the profile page
         request.getRequestDispatcher("/view/pages/profile.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Check if user is logged in
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
+            // Redirect to login page if user is not authenticated
             response.sendRedirect(request.getContextPath() + "/LoginServlet");
             return;
         }
 
+        // Get the authenticated user from session
         User currentUser = (User) session.getAttribute("user");
+
+        // Extract form parameters
         String fullName = request.getParameter("fullName");
         String currentPassword = request.getParameter("currentPassword");
         String newPassword = request.getParameter("newPassword");
         String confirmNewPassword = request.getParameter("confirmNewPassword");
 
         try {
-            // Process password change if fields are filled
+            // Handle password change if provided
             if (currentPassword != null && !currentPassword.isEmpty() &&
                     newPassword != null && !newPassword.isEmpty() &&
                     confirmNewPassword != null && !confirmNewPassword.isEmpty()) {
@@ -62,23 +72,24 @@ public class ProfileServlet extends HttpServlet {
                     return;
                 }
 
-                // Verify new passwords match
+                // Verify new passwords match clocks
                 if (!newPassword.equals(confirmNewPassword)) {
                     request.setAttribute("errorMessage", "New passwords don't match");
                     doGet(request, response);
                     return;
                 }
 
-                // Update password
+                // Hash and update the new password
                 String hashedPassword = PasswordHashUtil.hashPassword(newPassword);
                 currentUser.setPassword(hashedPassword);
             }
 
-            // Process profile image if uploaded
+            // Handle profile image upload
             Part imagePart = request.getPart("profileImage");
             byte[] imageBytes = null;
 
             if (imagePart != null && imagePart.getSize() > 0) {
+                // Validate that uploaded file is an image
                 String contentType = imagePart.getContentType();
                 if (!contentType.startsWith("image/")) {
                     request.setAttribute("errorMessage", "Only image files are allowed");
@@ -88,34 +99,39 @@ public class ProfileServlet extends HttpServlet {
                 imageBytes = imagePart.getInputStream().readAllBytes();
             }
 
-            // Update user object
+            // Update user object with new details
             currentUser.setFullName(fullName);
             if (imageBytes != null) {
                 currentUser.setImage(imageBytes);
             }
 
-            // Save to database
+            // Save updated user to database
             boolean updated = UserDAO.updateUser(currentUser);
 
-            // In the success update section:
             if (updated) {
-                // Update session
+                // Update session with new user details
                 session.setAttribute("user", currentUser);
                 if (imageBytes != null) {
+                    // Convert new image to Base64 and store in session
                     String base64Image = Base64.getEncoder().encodeToString(imageBytes);
                     session.setAttribute("base64Image", base64Image);
                 } else if (currentUser.getImage() == null) {
-                    // Clear the image if it was removed
+                    // Clear Base64 image from session if image was removed
                     session.removeAttribute("base64Image");
                 }
+                // Set success message
                 request.setAttribute("successMessage", "Profile updated successfully!");
             } else {
+                // Set error message if update fails
                 request.setAttribute("errorMessage", "Failed to update profile. Please try again.");
             }
 
         } catch (Exception e) {
+            // Handle any unexpected errors
             request.setAttribute("errorMessage", "An error occurred: " + e.getMessage());
         }
 
+        // Forward back to the profile page
         doGet(request, response);
-    }}
+    }
+}

@@ -18,39 +18,52 @@ public class BookCoverServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        // Initialize database connection
         Connection connection = null;
 
         try {
+            // Get book ID from request parameter
             String bookIdParam = request.getParameter("id");
             if (bookIdParam == null || bookIdParam.isEmpty()) {
+                // Return error if book ID is missing or empty
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Book ID is required");
                 return;
             }
 
+            // Parse book ID to integer
             int bookId = Integer.parseInt(bookIdParam);
+
+            // Establish database connection
             connection = DBConnectionUtil.getConnection();
             BookDAO bookDAO = new BookDAO(connection);
+
+            // Fetch book details by ID
             Book book = bookDAO.getBookById(bookId);
 
+            // Check if book or its image is missing
             if (book == null || book.getImage() == null || book.getImage().length == 0) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, "Book image not found");
                 return;
             }
 
-            // Use generic content type to support multiple image formats
+            // Set response content type to support various image formats
             response.setContentType("image/*");
 
+            // Write book image to response output stream
             try (OutputStream out = response.getOutputStream()) {
                 out.write(book.getImage());
                 out.flush();
             }
 
         } catch (NumberFormatException e) {
+            // Handle invalid book ID format
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid book ID format");
         } catch (SQLException e) {
+            // Log and handle database errors
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Database error");
         } finally {
+            // Close database connection to prevent resource leaks
             try {
                 if (connection != null && !connection.isClosed()) {
                     connection.close();

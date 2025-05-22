@@ -6,6 +6,7 @@ public class Borrow {
     private int borrowId;
     private int bookId;
     private int userId;
+    private String username;
     private Date borrowDate;
     private Date dueDate;
     private Date returnDate;
@@ -36,6 +37,14 @@ public class Borrow {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Date getBorrowDate() {

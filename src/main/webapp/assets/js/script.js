@@ -1,5 +1,3 @@
-// Common JavaScript functions for the library management system
-
 /**
  * Toggle password visibility
  * @param {string} inputId - The ID of the password input field
@@ -16,6 +14,31 @@ function togglePassword(inputId, iconId) {
         passwordInput.type = 'password';
         icon.classList.replace('fa-eye-slash', 'fa-eye');
     }
+}
+
+/**
+ * Show toast notification
+ * @param {string} message - The message to display
+ * @param {string} type - The type of toast ('success' or 'error')
+ */
+function showToast(message, type) {
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    // Show toast
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 100);
+
+    // Hide and remove toast after 4 seconds
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            toast.remove();
+        }, 300);
+    }, 4000);
 }
 
 /**
@@ -87,7 +110,6 @@ function validateRegisterForm(formId) {
         isValid = false;
     }
 
-
     // Image validation (optional)
     if (imageInput.files.length > 0) {
         const file = imageInput.files[0];
@@ -104,63 +126,10 @@ function validateRegisterForm(formId) {
     }
 
     return isValid;
-
-
-}
-function previewImage() {
-    const fileInput = document.getElementById('image');
-    const preview = document.getElementById('imagePreview');
-    const previewText = document.querySelector('.preview-text');
-
-    if (fileInput.files && fileInput.files[0]) {
-        const reader = new FileReader();
-
-        reader.onload = function(e) {
-            preview.src = e.target.result;
-            preview.style.display = 'block';
-            if (previewText) previewText.style.display = 'none';
-        };
-
-        reader.readAsDataURL(fileInput.files[0]);
-    }
-
-    document.getElementById('profileImage').addEventListener('change', function(event) {
-        const file = event.target.files[0];
-        if (file) {
-            // Validate image type
-            if (!file.type.startsWith('image/')) {
-                alert('Please select an image file');
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const imgContainer = document.querySelector('.profile-image-section');
-                if (imgContainer) {
-                    // Remove initial if exists
-                    const initialElement = imgContainer.querySelector('.profile-initial-large');
-                    if (initialElement) {
-                        initialElement.remove();
-                    }
-
-                    // Create or update image element
-                    let imgElement = imgContainer.querySelector('.profile-large-image');
-                    if (!imgElement) {
-                        imgElement = document.createElement('img');
-                        imgElement.className = 'profile-large-image';
-                        imgElement.alt = 'Profile Preview';
-                        imgContainer.insertBefore(imgElement, imgContainer.firstChild);
-                    }
-                    imgElement.src = e.target.result;
-                }
-            };
-            reader.readAsDataURL(file);
-        }
-    });
 }
 
 /**
- * Check if password is strong (has uppercase, lowercase, number, and special character)
+ * Check if password is strong
  * @param {string} password - Password to validate
  * @returns {boolean} - Returns true if password is strong
  */
@@ -169,58 +138,8 @@ function isStrongPassword(password) {
     const hasLowerCase = /[a-z]/.test(password);
     const hasNumber = /[0-9]/.test(password);
     const hasSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
-
     return hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar;
 }
-
-// Update the DOMContentLoaded event listener to include register form validation
-document.addEventListener('DOMContentLoaded', function() {
-    // Existing login form validation
-    const loginForm = document.getElementById('loginForm');
-    if (loginForm) {
-        loginForm.addEventListener('submit', function(event) {
-            if (!validateLoginForm('loginForm')) {
-                event.preventDefault();
-            }
-        });
-    }
-
-    // Add register form validation
-    const registerForm = document.getElementById('registerForm');
-    if (registerForm) {
-        registerForm.addEventListener('submit', function(event) {
-            if (!validateRegisterForm('registerForm')) {
-                event.preventDefault();
-            }
-        });
-    }
-
-    // Existing card and button effects
-    const cards = document.querySelectorAll('.card');
-    cards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-5px)';
-            this.style.transition = 'all 0.3s ease';
-            this.style.boxShadow = '0 10px 20px rgba(0, 0, 0, 0.1)';
-        });
-
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0)';
-            this.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
-        });
-    });
-
-    const buttons = document.querySelectorAll('.btn');
-    buttons.forEach(button => {
-        button.addEventListener('mousedown', function() {
-            this.style.transform = 'scale(0.98)';
-        });
-        button.addEventListener('mouseup', function() {
-            this.style.transform = 'scale(1)';
-        });
-    });
-});
-
 
 /**
  * Validate login form
@@ -294,7 +213,7 @@ function isValidEmail(email) {
     return re.test(email);
 }
 
-// Initialize form validation when DOM is loaded
+// Initialize form validation and effects
 document.addEventListener('DOMContentLoaded', function() {
     // Login form validation
     const loginForm = document.getElementById('loginForm');
@@ -306,7 +225,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Add hover effects to cards
+    // Register form validation
+    const registerForm = document.getElementById('registerForm');
+    if (registerForm) {
+        registerForm.addEventListener('submit', function(event) {
+            if (!validateRegisterForm('registerForm')) {
+                event.preventDefault();
+            }
+        });
+    }
+
+    // Card hover effects
     const cards = document.querySelectorAll('.card');
     cards.forEach(card => {
         card.addEventListener('mouseenter', function() {
@@ -314,14 +243,13 @@ document.addEventListener('DOMContentLoaded', function() {
             this.style.transition = 'all 0.3s ease';
             this.style.boxShadow = '0 10px 20px rgba(0, 0, 0, 0.1)';
         });
-
         card.addEventListener('mouseleave', function() {
             this.style.transform = 'translateY(0)';
             this.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
         });
     });
 
-    // Add animation to buttons
+    // Button click effects
     const buttons = document.querySelectorAll('.btn');
     buttons.forEach(button => {
         button.addEventListener('mousedown', function() {

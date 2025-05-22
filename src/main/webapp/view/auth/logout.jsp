@@ -1,20 +1,27 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: USER-PC
-  Date: 4/16/2025
-  Time: 10:52 PM
-  To change this template use File | Settings | File Templates.
---%>
+<%-- Logout page for UniShelf - University Library Management System --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Logging Out - UniShelf</title>
-    <meta http-equiv="refresh" content="2;url=<%= request.getContextPath() %>/LoginServlet?logout=true">
+    <%-- Page title --%>
+    <title>Logging Out</title>
+    <%-- Custom stylesheet for index page styling --%>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/index.css">
+    <%-- Custom stylesheet for logout page styling --%>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/Logout.css">
 </head>
 <body>
-<div class="logout-message">
-    <p>Logging you out...</p>
-</div>
+<%-- Include JavaScript for toast notifications and other utilities --%>
+<script src="${pageContext.request.contextPath}/assets/js/script.js"></script>
+<script>
+    // Show logout toast and redirect to homepage
+    document.addEventListener('DOMContentLoaded', function() {
+        // Display success toast message
+        showToast('You have been successfully logged out.', 'success');
+        // Redirect to homepage after 3 seconds
+        setTimeout(function() {
+            window.location.href = "<%= request.getContextPath() %>/index.jsp";
+        }, 3000);
+    });
+</script>
 </body>
 </html>

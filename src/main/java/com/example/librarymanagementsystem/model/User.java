@@ -59,6 +59,7 @@ public class User {
         this.created_at = created_at;
     }
 
+    // Getter and Setter method
     public int getId() {
         return id;
     }
@@ -124,3 +125,6 @@ public class User {
     }
 
 }
+
+
+

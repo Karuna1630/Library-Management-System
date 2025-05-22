@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.example.librarymanagementsystem.model.Book" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.Set" %>
 <html>
 <head>
     <title>Book Collection | UniShelf</title>
@@ -13,7 +14,7 @@
 <%@include file="../components/navbar.jsp" %>
 
 <!-- Toast Notifications -->
-<%
+    <%
     String errorMessage = (String) session.getAttribute("errorMessage");
     String successMessage = (String) session.getAttribute("successMessage");
     if (successMessage != null) {
@@ -26,7 +27,7 @@
         <button class="toast-close">×</button>
     </div>
 </div>
-<%
+    <%
     }
     if (errorMessage != null) {
         session.removeAttribute("errorMessage");
@@ -38,8 +39,10 @@
         <button class="toast-close">×</button>
     </div>
 </div>
-<%
+    <%
     }
+    Set<Integer> borrowedBooks = (Set<Integer>) session.getAttribute("borrowedBooks");
+    Set<Integer> reservedBooks = (Set<Integer>) session.getAttribute("reservedBooks");
 %>
 
 <!-- Hero Section -->
@@ -53,22 +56,30 @@
 <!-- Filter Section -->
 <section class="books-filter">
     <div class="filter-container container">
-        <div class="search-box">
-            <input type="text" placeholder="Search by title, author, or ISBN...">
+        <form action="${pageContext.request.contextPath}/BookListServlet" method="get" class="search-box">
+            <input type="text" name="search" placeholder="Search by title, author..." value="${searchQuery}">
             <i class="fas fa-search"></i>
-        </div>
-        <select class="filter-select">
-            <option>All Categories</option>
-            <option>Computer Science</option>
-            <option>Engineering</option>
-            <option>Mathematics</option>
-            <option>Literature</option>
-        </select>
-        <select class="filter-select">
-            <option>All Availability</option>
-            <option>Available Now</option>
-            <option>Currently Reserved</option>
-        </select>
+            <button type="submit" style="display:none;"></button>
+        </form>
+        <form action="${pageContext.request.contextPath}/BookListServlet" method="get" class="filter-select-container">
+            <select name="category" class="filter-select" onchange="this.form.submit()">
+                <option value="All Categories" ${category == null || category == 'All Categories' ? 'selected' : ''}>All Categories</option>
+                <option value="Computer Science" ${category == 'Computer Science' ? 'selected' : ''}>Computer Science</option>
+                <option value="Engineering" ${category == 'Engineering' ? 'selected' : ''}>Engineering</option>
+                <option value="Mathematics" ${category == 'Mathematics' ? 'selected' : ''}>Mathematics</option>
+                <option value="Literature" ${category == 'Literature' ? 'selected' : ''}>Literature</option>
+            </select>
+            <input type="hidden" name="search" value="${searchQuery}">
+        </form>
+        <form action="${pageContext.request.contextPath}/BookListServlet" method="get" class="filter-select-container">
+            <select name="availability" class="filter-select" onchange="this.form.submit()">
+                <option value="All Availability" ${availability == null || availability == 'All Availability' ? 'selected' : ''}>All Availability</option>
+                <option value="Available Now" ${availability == 'Available Now' ? 'selected' : ''}>Available Now</option>
+                <option value="Currently Reserved" ${availability == 'Currently Reserved' ? 'selected' : ''}>Currently Reserved</option>
+            </select>
+            <input type="hidden" name="search" value="${searchQuery}">
+            <input type="hidden" name="category" value="${category}">
+        </form>
     </div>
 </section>
 
@@ -79,6 +90,8 @@
             List<Book> books = (List<Book>) request.getAttribute("books");
             if (books != null && !books.isEmpty()) {
                 for (Book book : books) {
+                    boolean isBorrowedByUser = borrowedBooks != null && borrowedBooks.contains(book.getBookId());
+                    boolean isReservedByUser = reservedBooks != null && reservedBooks.contains(book.getBookId());
         %>
         <div class="book-card">
             <div class="book-cover">
@@ -101,7 +114,11 @@
                     <span><i class="fas fa-calendar-alt"></i> <%= book.getPublicationYear() != null ? book.getPublicationYear() : "N/A" %></span>
                 </div>
                 <div class="book-actions">
-                    <% if (book.getStock() > 0) { %>
+                    <% if (isBorrowedByUser) { %>
+                    <button class="btn btn-borrow" disabled>Borrowed</button>
+                    <% } else if (isReservedByUser) { %>
+                    <button class="btn btn-borrow" disabled>Reserved</button>
+                    <% } else if (book.getStock() > 0) { %>
                     <form action="${pageContext.request.contextPath}/BorrowServlet" method="POST">
                         <input type="hidden" name="bookId" value="<%= book.getBookId() %>">
                         <button type="submit" class="btn btn-borrow">Borrow Book</button>
@@ -119,7 +136,7 @@
             }
         } else {
         %>
-        <p>No books available at the moment.</p>
+        <p>No books available matching your criteria.</p>
         <%
             }
         %>
@@ -135,12 +152,18 @@
             button.parentElement.classList.remove('show');
         });
     });
+
     // Auto-hide toasts after 5 seconds
     setTimeout(() => {
         document.querySelectorAll('.toast.show').forEach(toast => {
             toast.classList.remove('show');
         });
     }, 5000);
+
+    // Submit search form on Enter key press
+    document.querySelector('.search-box input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            this.parentElement.submit();
+        }
+    });
 </script>
-</body>
-</html>

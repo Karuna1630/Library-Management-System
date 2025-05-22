@@ -640,30 +640,30 @@
     }
 
 
+    /* Book Management Image CSS */
     .book-cover-small {
         width: 50px !important;
         height: 70px !important;
-        object-fit: cover; /* Crops to fill, preserving aspect ratio */
+        object-fit: cover !important; /* Crops to fill, preserving aspect ratio */
         border-radius: 4px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        display: block; /* Avoids inline spacing issues */
-        max-width: 50px; /* Prevents stretching */
-        max-height: 70px;
-
+        display: block !important; /* Avoids inline spacing issues */
+        max-width: 50px !important; /* Prevents stretching */
+        max-height: 70px !important;
     }
 
     .book-cover-container-admin {
-        width: 50px;
-        height: 70px;
+        width: 50px !important;
+        height: 70px !important;
         display: flex;
         align-items: center;
         justify-content: center;
-        overflow: hidden; /* Prevent content from overflowing */
+        overflow: hidden !important; /* Prevent content from overflowing */
     }
 
     .book-cover-placeholder {
-        width: 50px;
-        height: 70px;
+        width: 50px !important;
+        height: 70px !important;
         background-color: #f0f0f0;
         border-radius: 4px;
         display: flex;
@@ -673,10 +673,14 @@
         font-size: 20px;
     }
 
-    .books-table td:first-child {
-        width: 70px;
+    /* Ensure the table cell aligns with the image size */
+    .books-table td:first-child,
+    .borrow-table td:first-child {
+        width: 70px !important;
         text-align: center;
+        padding: 0.5rem !important; /* Reduced padding to match smaller size */
     }
+
 
     /* Add this section for the book detail view */
     .book-cover-detail {

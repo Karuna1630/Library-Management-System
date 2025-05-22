@@ -10,11 +10,12 @@ import java.io.IOException;
 public class ContactServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Forward the request to the Contact page
         request.getRequestDispatcher("/view/pages/contact.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        // No POST handling implemented for this servlet
     }
 }
