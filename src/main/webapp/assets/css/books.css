@@ -1,199 +1,215 @@
-
-:root {
-    --contact-method-bg: #f8fafc;
-    --form-bg: #ffffff;
-}
-
-/* Hero Section */
-.contact-hero {
+/* Books Hero Section */
+.books-hero {
     background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
     color: white;
-    padding: 6rem 2rem;
+    padding: 5rem 2rem;
     text-align: center;
 }
 
-.contact-hero h1 {
+.books-hero h1 {
     font-size: 2.75rem;
     margin-bottom: 1.25rem;
-    line-height: 1.2;
     color: var(--light-color);
 }
 
-.contact-hero p {
-    font-size: 1.2rem;
-    opacity: 0.9;
-    max-width: 700px;
-    margin: 0 auto;
+/* Books Filter Section */
+.books-filter {
+    padding: 2rem;
+    background: var(--gray-100);
 }
 
-/* Contact Content */
-.contact-content {
-    padding: 5rem 2rem;
-    background: white;
-}
-
-.contact-container {
+.filter-container {
     max-width: 1200px;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Equal two columns */
-    gap: 3rem;
-    align-items: start;
-}
-
-/* Contact Methods */
-.contact-methods {
-    background: var(--contact-method-bg);
-    padding: 2.5rem;
-    border-radius: var(--card-radius);
-    height: 100%;
-    box-sizing: border-box;
-}
-
-.contact-methods h2 {
-    font-size: 1.75rem;
-    margin-bottom: 2rem;
-    color: var(--dark-color);
-    position: relative;
-    padding-bottom: 0.75rem;
-}
-
-.contact-methods h2::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 60px;
-    height: 3px;
-    background-color: var(--primary-color);
-}
-
-.contact-method {
     display: flex;
-    gap: 1.25rem;
-    margin-bottom: 2rem;
-    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
 }
 
-.contact-method:last-child {
-    margin-bottom: 0;
+/* Update the search box styles */
+.search-box {
+    flex: 1;
+    min-width: 300px;
+    position: relative;
 }
 
-.contact-icon {
-    font-size: 1.5rem;
+.search-box form {
+    width: 100%;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 0.75rem 3rem 0.75rem 1.25rem;
+    border-radius: 30px;
+    border: 1px solid var(--gray-300);
+}
+
+.search-box i {
+    position: absolute;
+    right: 1.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray-500);
+    pointer-events: none;
+}
+
+.search-box input:focus + i {
     color: var(--primary-color);
-    background: rgba(67, 97, 238, 0.1);
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
+}
+
+.filter-select-container {
+    position: relative;
+}
+
+.filter-select {
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    border: 1px solid var(--gray-300);
+}
+
+/* Books Grid */
+.books-grid {
+    padding: 3rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+/* Book Card */
+.book-card {
+    background: white;
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    border: 1px solid var(--gray-200);
+}
+
+.book-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.book-cover {
+    height: 200px;
+    background: var(--gray-100);
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
+    position: relative;
 }
 
-.contact-method-content h3 {
+.book-cover i {
+    font-size: 3.5rem;
+    color: var(--primary-color);
+}
+
+.book-status {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.status-available {
+    background: var(--success-color);
+    color: white;
+}
+
+.status-borrowed {
+    background: var(--error-color);
+    color: white;
+}
+
+.book-info {
+    padding: 1.5rem;
+}
+
+.book-title {
     font-size: 1.25rem;
     margin-bottom: 0.5rem;
     color: var(--dark-color);
 }
 
-.contact-method-content p {
-    color: var(--text-color);
-    line-height: 1.6;
-    margin-bottom: 0.25rem;
+.book-author {
+    color: var(--gray-500);
+    margin-bottom: 1rem;
 }
 
-/* Contact Form */
-.contact-form {
-    background: var(--form-bg);
-    padding: 2.5rem;
-    border-radius: var(--card-radius);
-    box-shadow: var(--box-shadow);
-    height: 100%;
-    box-sizing: border-box;
+.book-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
 }
 
-.contact-form h2 {
-    font-size: 1.75rem;
-    margin-bottom: 2rem;
-    color: var(--dark-color);
-    position: relative;
-    padding-bottom: 0.75rem;
+.book-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: var(--gray-500);
 }
 
-.contact-form h2::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 60px;
-    height: 3px;
-    background-color: var(--primary-color);
+.book-actions {
+    display: flex;
+    gap: 1rem;
 }
 
-.form-group {
-    margin-bottom: 1.75rem;
-}
-
-.form-label {
-    display: block;
-    margin-bottom: 0.75rem;
-    font-weight: 600;
-    color: var(--dark-color);
-}
-
-.form-input,
-.form-textarea {
-    width: 100%;
-    padding: 0.875rem 1rem;
-    border: 1px solid var(--gray-300);
-    border-radius: 8px;
-    font-family: inherit;
+.btn-borrow {
+    flex: 1;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.75rem;
+    border-radius: 6px;
     font-size: 1rem;
+    cursor: pointer;
     transition: var(--transition);
 }
 
-.form-input:focus,
-.form-textarea:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+.btn-borrow:hover {
+    background: var(--primary-dark);
+    transform: scale(1.05);
 }
 
-.form-textarea {
-    min-height: 160px;
-    resize: vertical;
+.btn-borrow[disabled] {
+    background: var(--primary-color);
+    color: white;
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.7;
 }
 
-.btn.submit-btn {
-    width: 100%;
-    padding: 1rem;
-    font-size: 1.1rem;
-    margin-top: 1rem;
+.btn-details {
+    background: white;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-    .contact-hero {
-        padding: 4rem 1.5rem;
-    }
-
-    .contact-hero h1 {
+    .books-hero h1 {
         font-size: 2.25rem;
     }
 
-    .contact-content {
-        padding: 3rem 1.5rem;
+    .filter-container {
+        flex-direction: column;
     }
 
-    .contact-container {
-        grid-template-columns: 1fr;
-        gap: 2rem;
+    .search-box {
+        width: 100%;
     }
 
-    .contact-methods,
-    .contact-form {
-        padding: 2rem;
+    .filter-select-container {
+        width: 100%;
     }
 }
